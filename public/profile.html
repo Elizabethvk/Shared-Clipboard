@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест профил</title>
+  <script defer src="js/profile.js"></script>
+  <link rel="stylesheet" href="css/profile.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon.png">
+</head>
+
+<body>
+  <header class="header">
+
+    <h1 id="main-title">Тест профил</h1>
+    <nav>
+      <button id="events">Клипбордове</button>
+      <button id="profile">Профил</button>
+      <button id="logout">Изход</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <i>
+      <h1 id="my-profile"> Моят профил</h1>
+    </i>
+    <div class="break"></div>
+    <section id="my-information" class="my-information">
+      <section id="info" class="info">
+        <h2 class="my-information-text">Информация за мен</h2>
+        <!-- <p class="text-field">Име:</p> -->
+        <p class="user-info" id="first-name"></p>
+        <!-- <p class="text-field">Фамилия:</p> -->
+        <p class="user-info" id="last-name"></p>
+        <!-- <p class="text-field">Имейл:</p> -->
+        <p class="user-info" id="email"></p>
+        <!-- <p class="text-field">Специалност:</p> -->
+        <p class="user-info" id="specialty"></p>
+        <!-- <p class="text-field">Факултетен номер:</p> -->
+        <p class="user-info" id="fn"></p>
+        <!-- <p class="text-field">Курс:</p> -->
+        <p class="user-info" id="course"></p>
+      </section>
+    </section>
+
+    <!-- <section id="add-event" class="add-event">
+      <form id="add-event-form" class="add-event-form">
+
+        <h2 class="add-event-text">Добави събитие</h2>
+        <input class="input-group" type="text" placeholder="Име" name="name" required>
+        <input class="input-group" type="text" placeholder="Място" name="venue" required>
+        <input class="input-group" type="text" placeholder="Начало" name="startTime"
+          onfocus="(this.type='datetime-local')" onblur="(this.type='text')" required>
+        <input class="input-group" type="text" placeholder="Край" name="endTime" onfocus="(this.type='datetime-local')"
+          onblur="(this.type='text')">
+        <input class="input-group" type="text" placeholder="Линк към онлайн среща" name="meetingLink">
+        <input class="input-group" type="text" placeholder="Парола за онлайн среща" name="meetingPassword">
+        <button class="btn" id="login-button" type="submit">Добавяне</button>
+        <p id="user-message"></p>
+      </form>
+    </section> -->
+
+    <section id="event-list">
+      <h2 id="event-list-heading">Моите клипбордове</h2>
+    </section>
+
+  </main>
+</body>
+
+</html>
