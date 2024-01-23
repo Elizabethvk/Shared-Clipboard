@@ -8,8 +8,7 @@ const onLoginSubmit = (event) => {
     password: formElement.querySelector("input[name='password']").value,
   };
 
-  // wherever it is TODO
-  fetch("login.php", {
+  fetch("../../src/login.php", {
     method: "POST",
     body: JSON.stringify(formData),
   })
