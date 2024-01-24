@@ -8,7 +8,7 @@ async function subscribe(user_id, clipboard_id) {
     formData.append("clipboard_id", clipboard_id);
 
     console.log(user_id, clipboard_id);
-    await fetch("../php/add_user_to_clipboard.php", {
+    await fetch("../../src/add_user_to_clipboard.php", {
         method: "POST",
         body: formData
     });

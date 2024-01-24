@@ -52,6 +52,14 @@ class Db
         $this->userByEmailStmt->execute(['email' => $email]);
         return $this->userByEmailStmt->fetch();
     }
+
+    public function removeAuthToken($user_id) {
+        $sql = "DELETE FROM auth_token WHERE user_id = :userId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(":userId", $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->closeCursor();
+    }
 }
 
 $db = new Db();

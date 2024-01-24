@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['auth_token'] = $token;
 
             if ($user['is_admin']) {
-                header("Location: ./home-admin.php");
+                header("Location: home_admin.php");
             } else {
-                header("Location: ./home-user.php");
+                header("Location: home_user.php");
             }
             exit();
         } else {

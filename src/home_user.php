@@ -24,17 +24,18 @@
     $result_user = mysqli_query($conn, $query_user);
     $row_user = mysqli_fetch_array($result_user);
     if ($row_user['is_admin']) {
-        header("Location: home-admin.php");
+        header("Location: home_admin.php");
     }
 
     // Retrieve clipboards the user is subscribed to
-    $subquery = "SELECT  FROM subscriptions WHERE USER_ID = $user_id";
-    $query_subscribed = "SELECT * FROM Clipboards WHERE ID IN ($subquery)";
+    $subquery = "SELECT user_id FROM subscription WHERE subscriber_id = $user_id";
+    $query_subscribed = "SELECT * FROM clip WHERE owner_id IN ($subquery)";
+    // $query_subscribed = "SELECT * FROM clip WHERE id IN (select )";
     $result_subscribed = mysqli_query($conn, $query_subscribed);
 
-    // Retrieve all public clipboards excluding those user is subscribed to
-    $subquery_all_public = "SELECT CLIPBOARD_ID FROM `SUBSCRIPTIONS` WHERE USER_ID=$user_id";
-    $query_all_public = "SELECT * FROM CLIPBOARDS WHERE IS_PRIVATE IS false AND ID NOT IN ($subquery_all_public)";
+    // Retrieve all public clipboards excluding those the user is subscribed to
+    $subquery_all_public = "SELECT user_id FROM subscription WHERE subscriber_id=$user_id";
+    $query_all_public = "SELECT * FROM clip WHERE is_public IS false AND owner_id NOT IN ($subquery_all_public)";
     $result_all_public = mysqli_query($conn, $query_all_public);
 
     // Visualize subscribed clipboards table
@@ -50,7 +51,11 @@
                 <tbody class='tableBody'>";
 
     while ($row_subscribed = mysqli_fetch_array($result_subscribed)) {
-        // ... (output rows for subscribed clipboards)
+        // Output rows for subscribed clipboards
+        echo "<tr class='tableRow'>";
+        echo "<td class='clipName'>" . $row_subscribed['name'] . "</td>";
+        // Add other columns as needed
+        echo "</tr>";
     }
 
     echo "</tbody>";
@@ -71,7 +76,15 @@
                 <tbody class='tableBody'>";
 
     while ($row_all_public = mysqli_fetch_array($result_all_public)) {
-        // ... (output rows for all public clipboards)
+        // Output rows for all public clipboards
+        echo "<tr class='tableRow'>";
+        echo "<td class='clipName'>" . $row_all_public['name'] . "</td>";
+        // Add other columns as needed
+        echo "<td class='borderData'>" . $row_all_public['resource_type'] . "</td>";
+        echo "<td class='addUser'> 
+                <button type='button' id='subscribeBtn' onclick='subscribe($user_id, $clipboard_id)'>Subscribe</button>
+              </td>";
+        echo "</tr>";
     }
 
     echo "</tbody>";

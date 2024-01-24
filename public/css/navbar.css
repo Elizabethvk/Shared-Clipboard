@@ -1,0 +1,30 @@
+.navigation {
+    margin: 0% 5% 0% 5%;
+}
+
+.navlist {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navlist li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navlist li a:hover:not(.active) {
+    background-color: #000;
+}
+
+.navlist li a.active:hover {
+    background-color:#04AA6D;
+}
