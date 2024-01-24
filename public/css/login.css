@@ -92,6 +92,13 @@ input:valid {
   color: #ac6100;
 }
 
+.error {
+  padding-bottom: 20px;
+padding-left: 10px;
+  color: rgb(136, 24, 24);
+font-weight: bold;
+}
+
 @media (max-width: 430px) {
   .container {
     width: 300px;
