@@ -3,7 +3,7 @@
 <head>
     <title>Home</title>
     <link href="../public/css/dynamic-table.css" rel="stylesheet">
-    <?php require 'navbar.php'; ?>
+    <!-- <?php require 'navbar.php'; ?> -->
     <script src="../public/js/home-user.js"></script>
 </head>
 <body>
@@ -18,6 +18,9 @@
     } else {
         die("Not logged in!");
     }
+    
+    echo $_SESSION;
+    echo $user_id;
 
     // Retrieve user information
     $query_user = "SELECT * FROM `user` WHERE ID=$user_id";

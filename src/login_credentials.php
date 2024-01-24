@@ -1,13 +1,13 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
+
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['email'], $_POST['password'])) {
         $email = $_POST['email'];
         $enteredPassword = $_POST['password'];
-
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
 
         $user = $db->getUserByEmail($email);
 
