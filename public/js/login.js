@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const response = await submitLoginForm(email, password);
 
                 if (response && response.success) {
-                    window.location.href = 'home_user.php';
+                    window.location.href = 'home/home_user.php';
                 } else {
                     displayServerErrors(response ? response.errors : { server: 'Server error' });
                 }
@@ -36,20 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-
-    // function validateForm(email, password) {
-    //     const errors = {};
-
-    //     if (!validateEmail(email)) {
-    //         errors['email'] = 'Невалиден имейл адрес!';
-    //     }
-
-    //     if (password.length < 6) {
-    //         errors['password'] = 'Паролата трябва да е поне 6 символа дълга!';
-    //     }
-
-    //     return errors;
-    // }
 
     function validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+|[^\s@]+@[^\s@]+\.[^\s@]+\.[^\s@]+$/;
@@ -72,16 +58,11 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('password', password);
 
         try {
-            const response = await fetch('../../src/login_credentials.php', {
+            return fetch('../../src/login_credentials.php', {
                 method: 'POST',
                 body: formData,
-            });
-
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Server error');
-            }
+            })
+                .then(response => response.json());
         } catch (error) {
             console.error('Error during form submission:', error);
             return { success: false, errors: { server: 'Server error' } };
