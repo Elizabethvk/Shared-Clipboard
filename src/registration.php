@@ -12,7 +12,7 @@
 
 <body>
     <section class="container">
-        <form id="register-form" class="register-form" action="/src/registration_credentials.php" method="post">
+        <form id="register-form" class="register-form" method="post">
             <h1 class="register-text">Регистрация</h1>
 
             <div class="form-group">
@@ -40,7 +40,7 @@
 			<p class="register-under-text">
                 Вече имаш профил? <a href="login.php">Влез в профила си</a>
             </p>
-			
+
         </form>
     </section>
 </body>

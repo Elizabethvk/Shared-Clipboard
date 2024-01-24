@@ -5,9 +5,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
 class Db
 {
     private $connection;
-
     private $loginValidationStmt;
     private $userByEmailStmt;
+    private $userByUsernameStmt;
     private $storeAuthTokenStmt;
     private $removeAuthTokenStmt;
     private $storeUserStmt;
@@ -32,6 +32,7 @@ class Db
 
         $this->loginValidationStmt = $this->connection->prepare("SELECT 1 FROM user WHERE email=:email AND password=:password");
         $this->userByEmailStmt = $this->connection->prepare("SELECT * FROM user WHERE email=:email");
+        $this->userByUsernameStmt = $this->connection->prepare("SELECT * FROM user WHERE username=:username");
         $this->storeAuthTokenStmt = $this->connection->prepare("INSERT INTO auth_token (user_id, token, expires_at) VALUES (:userId, :token, :expirationTime)");
         $this->removeAuthTokenStmt = $this->connection->prepare("DELETE FROM auth_token WHERE user_id = :userId");
         $this->storeUserStmt = $this->connection->prepare("INSERT INTO user (email, username, password, is_admin) VALUES (:email, :username, :password, :isAdmin)");
@@ -56,6 +57,12 @@ class Db
     {
         $this->userByEmailStmt->execute(['email' => $email]);
         return $this->userByEmailStmt->fetch();
+    }
+
+    public function getUserByUsername($username)
+    {
+        $this->userByUsernameStmt->execute(['username' => $username]);
+        return $this->userByUsernameStmt->fetch();
     }
 
     public function removeAuthToken($user_id)

@@ -4,7 +4,12 @@ session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
-$db = new Db();
+$response = [
+    'success' => false,
+    'message' => '',
+    'errors' => [],
+    'uniqueUsername' => false,
+];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['email'], $_POST['username'], $_POST['password'], $_POST['repeat_password'])) {
@@ -23,12 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if email already exists
         $existingUser = $db->getUserByEmail($email);
         if ($existingUser) {
-            $errors['email'] = 'Email ID already exists';
+            $errors['email'] = 'Вече съществува потребител с такъв имейл адрес!';
         }
 
         // Validate username
         if (empty($username)) {
             $errors['username'] = 'Username is required';
+        } else {
+            $existingUsername = $db->getUserByUsername($username);
+            
+            if ($existingUsername) {
+                // Username already exists, treat it as an error
+                $errors['username'] = 'Вече съществува потребител с такъв никнейм!';
+            } else {
+                // Username is unique
+                $response['uniqueUsername'] = true;
+            }
         }
 
         // Validate password
@@ -47,23 +62,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if email already exists again (just to be sure)
             $existingUser = $db->getUserByEmail($email);
             if ($existingUser) {
-                $_SESSION['registration_errors'] = ['email' => 'Email ID already exists'];
-                header("Location: registration.php");
-                exit;
+                // $response['success'] = false;
+                $response['message'] = 'Email ID already exists';
+            } else {
+                // Insert new user into the database
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $db->storeUser($email, $username, $hashedPassword, false);
+
+                $response['success'] = true;
+                $response['message'] = 'Registration successful';
             }
-
-            // Insert new user into the database
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $db->storeUser($email, $username, $hashedPassword, false);
-
-            header("Location: home_user.php");
-            exit;
         } else {
-            // If there are errors, store them in the session variable
-            $_SESSION['registration_errors'] = $errors;
-            header("Location: registration.php");
-            exit;
+            // If there are errors, store them in the response
+            // $response['success'] = false;
+            $response['errors'] = $errors;
         }
+
+        // Return the JSON response
+        // echo json_encode($response);
+        // exit;
     }
 }
+
+header('Content-Type: application/json');
+
+echo json_encode($response);
+exit;
 ?>
