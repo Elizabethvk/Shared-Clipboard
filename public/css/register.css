@@ -8,7 +8,9 @@
 body {
 	width: 100%;
 	min-height: 100vh;
-	background-color: #e2ebf1;
+	/* background-color: #e2ebf1; */
+	background: rgb(235,95,25);
+	background: linear-gradient(-130deg, rgba(235,95,25,0.89) 0%, rgba(253,187,45,0.89) 100%);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -23,7 +25,7 @@ body {
 }
 
 .container .register-text {
-	color: #003d7ee3;
+	color: #e98300;
 	font-weight: 800;
 	font-size: 2rem;
 	text-align: center;
@@ -52,7 +54,8 @@ input {
 
 input:focus,
 input:valid {
-	border-color: #003c7e;
+	border-color: #ac6100;
+	box-shadow: 0 0 5px #ac6100;
 }
 
 .btn {
@@ -62,7 +65,7 @@ input:valid {
 	padding: 9px 20px;
 	text-align: center;
 	border: none;
-	background: #4990b9;
+	background: #e98300;
 	outline: none;
 	border-radius: 30px;
 	font-size: 1.2rem;
@@ -73,7 +76,8 @@ input:valid {
 
 .btn:hover {
 	transform: translateY(-5px);
-	background: #003c7e;
+	background: #bb6a00;
+	box-shadow: 0 0 5px #ac6100;
 }
 
 .register-under-text {
@@ -85,7 +89,7 @@ input:valid {
 
 .register-under-text a {
 	text-decoration: none;
-	color: #003c7e;
+	color: #ac6100;
 }
 
 .hide {

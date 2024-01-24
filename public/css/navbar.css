@@ -5,12 +5,15 @@
 .navlist {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #333;
+    background-color: #e98300;
+}
+
+.navlist li {
+    margin: 0;
 }
 
 .navlist li a {
@@ -22,9 +25,9 @@
 }
 
 .navlist li a:hover:not(.active) {
-    background-color: #000;
+    background-color: #ac6100;
 }
 
-.navlist li a.active:hover {
-    background-color:#04AA6D;
+.navlist li a.active {
+    background-color: #c67102;
 }
