@@ -97,7 +97,7 @@ input:valid {
 }
 
 .error {
-	padding-top: 0.5rem;
+	/* padding-top: 0.5rem; */
 	color: rgb(136, 24, 24);
 }
 

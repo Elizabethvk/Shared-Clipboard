@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+
+$db = new Db();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['email'], $_POST['username'], $_POST['password'], $_POST['repeat_password'])) {
         $email = $_POST['email'];
@@ -16,9 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Check if email already exists
-        include 'config/config.php';
-        $sql = mysqli_query($conn, "select * from `user` where email='$email'");
-        if (mysqli_num_rows($sql) > 0) {
+        $existingUser = $db->getUserByEmail($email);
+        if ($existingUser) {
             $errors['email'] = 'Email ID already exists';
         }
 
@@ -39,28 +43,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($errors)) {
             // If there are no errors, proceed with the registration logic
-            include 'config/config.php';
-            
+
             // Check if email already exists again (just to be sure)
-            $sql = mysqli_query($conn, "select * from `user` where email='$email'");
-            if (mysqli_num_rows($sql) > 0) {
-                echo json_encode(['success' => false, 'message' => 'Email ID already exists']);
+            $existingUser = $db->getUserByEmail($email);
+            if ($existingUser) {
+                $_SESSION['registration_errors'] = ['email' => 'Email ID already exists'];
+                header("Location: registration.php");
                 exit;
             }
 
             // Insert new user into the database
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $query = "insert into `user` (email, username, password, is_admin) values ('$email', '$username', '$hashedPassword', false)";
-            $sql = mysqli_query($conn, $query) or die("Could not perform the query");
-            
-            // echo json_encode(['success' => true, 'message' => 'Registration successful']);
+            $db->storeUser($email, $username, $hashedPassword, false);
+
             header("Location: home_user.php");
             exit;
         } else {
-            // If there are errors, return them as a JSON response
-            echo json_encode(['success' => false, 'errors' => $errors]);
+            // If there are errors, store them in the session variable
+            $_SESSION['registration_errors'] = $errors;
+            header("Location: registration.php");
             exit;
         }
     }
 }
-// ?>
+?>

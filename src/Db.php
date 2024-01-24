@@ -53,13 +53,26 @@ class Db
         return $this->userByEmailStmt->fetch();
     }
 
-    public function removeAuthToken($user_id) {
+    public function removeAuthToken($user_id)
+    {
         $sql = "DELETE FROM auth_token WHERE user_id = :userId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(":userId", $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->closeCursor();
     }
+
+    public function storeUser($email, $username, $hashedPassword, $isAdmin)
+    {
+        $stmt = $this->connection->prepare("INSERT INTO user (email, username, password, is_admin) VALUES (:email, :username, :password, :isAdmin)");
+        $stmt->execute([
+            'email' => $email,
+            'username' => $username,
+            'password' => $hashedPassword,
+            'isAdmin' => $isAdmin,
+        ]);
+    }
+
 }
 
 $db = new Db();
