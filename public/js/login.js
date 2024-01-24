@@ -1,77 +1,79 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('login-form');
+// verify only the fields here
 
-    form.addEventListener('submit', async function (event) {
-        event.preventDefault();
+// document.addEventListener('DOMContentLoaded', function () {
+//     const form = document.getElementById('login-form');
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+//     form.addEventListener('submit', async function (event) {
+//         event.preventDefault();
 
-        // const errors = validateForm(email, password);
+//         const email = document.getElementById('email').value;
+//         const password = document.getElementById('password').value;
 
-        const errors = {};
+//         // const errors = validateForm(email, password);
 
-        if (!validateEmail(email)) {
-            errors['email'] = 'Невалиден имейл адрес!';
-        }
+//         const errors = {};
 
-        if (password.length < 6) {
-            errors['password'] = 'Паролата трябва да е поне 6 символа дълга!';
-        }
+//         if (!validateEmail(email)) {
+//             errors['email'] = 'Невалиден имейл адрес!';
+//         }
 
-        displayErrors(errors);
+//         if (password.length < 6) {
+//             errors['password'] = 'Паролата трябва да е поне 6 символа дълга!';
+//         }
 
-        if (Object.keys(errors).length === 0) {
-            try {
-                const response = await submitLoginForm(email, password);
+//         displayErrors(errors);
 
-                if (response && response.success) {
-                    window.location.href = 'home/home_user.php';
-                } else {
-                    displayServerErrors(response ? response.errors : { server: 'Server error' });
-                }
-            } catch (error) {
-                console.error('Error during form submission:', error);
-                displayServerErrors({ server: 'Unexpected error' });
-            }
-        }
-    });
+//         if (Object.keys(errors).length === 0) {
+//             try {
+//                 const response = await submitLoginForm(email, password);
 
-    function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+|[^\s@]+@[^\s@]+\.[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
+//                 if (response && response.success) {
+//                     window.location.href = 'home/home_user.php';
+//                 } else {
+//                     displayServerErrors(response ? response.errors : { server: 'Server error' });
+//                 }
+//             } catch (error) {
+//                 console.error('Error during form submission:', error);
+//                 displayServerErrors({ server: 'Unexpected error' });
+//             }
+//         }
+//     });
 
-    function displayErrors(errors) {
-        displayError('erroremail', errors['email']);
-        displayError('errorpassword', errors['password']);
-    }
+//     function validateEmail(email) {
+//         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+|[^\s@]+@[^\s@]+\.[^\s@]+\.[^\s@]+$/;
+//         return emailRegex.test(email);
+//     }
 
-    function displayError(elementId, errorMessage) {
-        const errorElement = document.getElementById(elementId);
-        errorElement.innerText = errorMessage || '';
-    }
+//     function displayErrors(errors) {
+//         displayError('erroremail', errors['email']);
+//         displayError('errorpassword', errors['password']);
+//     }
 
-    async function submitLoginForm(email, password) {
-        const formData = new FormData();
-        formData.append('email', email);
-        formData.append('password', password);
+//     function displayError(elementId, errorMessage) {
+//         const errorElement = document.getElementById(elementId);
+//         errorElement.innerText = errorMessage || '';
+//     }
 
-        try {
-            return fetch('../../src/login_credentials.php', {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.json());
-        } catch (error) {
-            console.error('Error during form submission:', error);
-            return { success: false, errors: { server: 'Server error' } };
-        }
-    }
+//     async function submitLoginForm(email, password) {
+//         const formData = new FormData();
+//         formData.append('email', email);
+//         formData.append('password', password);
 
-    function displayServerErrors(serverErrors) {
-        displayErrors(serverErrors);
-        // displayError('erroremail', serverErrors['email']);
-        // displayError('errorpassword', serverErrors['password']);
-    }
-});
+//         try {
+//             return fetch('../../src/login_credentials.php', {
+//                 method: 'POST',
+//                 body: formData,
+//             })
+//                 .then(response => response.json());
+//         } catch (error) {
+//             console.error('Error during form submission:', error);
+//             return { success: false, errors: { server: 'Server error' } };
+//         }
+//     }
+
+//     function displayServerErrors(serverErrors) {
+//         displayErrors(serverErrors);
+//         // displayError('erroremail', serverErrors['email']);
+//         // displayError('errorpassword', serverErrors['password']);
+//     }
+// });

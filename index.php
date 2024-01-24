@@ -22,9 +22,9 @@
 session_start();
 if ($_SESSION['user']) {
 	// user is authenticated
-	header('Location: src/home_user.php');
+	header('Location: src/home/home_user.php');
 } else {
 	// user is not authenticated
-	header('Location: src/login.php');
+	header('Location: src/login/login.html');
 }
 ?>
