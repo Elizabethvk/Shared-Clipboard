@@ -8,6 +8,9 @@ class Db
 
     private $loginValidationStmt;
     private $userByEmailStmt;
+    private $storeAuthTokenStmt;
+    private $removeAuthTokenStmt;
+    private $storeUserStmt;
 
     public function __construct()
     {
@@ -29,6 +32,9 @@ class Db
 
         $this->loginValidationStmt = $this->connection->prepare("SELECT 1 FROM user WHERE email=:email AND password=:password");
         $this->userByEmailStmt = $this->connection->prepare("SELECT * FROM user WHERE email=:email");
+        $this->storeAuthTokenStmt = $this->connection->prepare("INSERT INTO auth_token (user_id, token, expires_at) VALUES (:userId, :token, :expirationTime)");
+        $this->removeAuthTokenStmt = $this->connection->prepare("DELETE FROM auth_token WHERE user_id = :userId");
+        $this->storeUserStmt = $this->connection->prepare("INSERT INTO user (email, username, password, is_admin) VALUES (:email, :username, :password, :isAdmin)");
     }
 
     public function validLogin($email, $password)
@@ -39,8 +45,7 @@ class Db
 
     public function storeAuthToken($userId, $token, $expirationTime)
     {
-        $stmt = $this->connection->prepare("insert into auth_token (user_id, token, expires_at) values (:userId, :token, :expirationTime)");
-        $stmt->execute([
+        $this->storeAuthTokenStmt->execute([
             'userId' => $userId,
             'token' => $token,
             'expirationTime' => $expirationTime,
@@ -55,17 +60,13 @@ class Db
 
     public function removeAuthToken($user_id)
     {
-        $sql = "DELETE FROM auth_token WHERE user_id = :userId";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(":userId", $user_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $stmt->closeCursor();
+        $this->removeAuthTokenStmt->bindParam(":userId", $user_id, PDO::PARAM_INT);
+        $this->removeAuthTokenStmt->execute();
     }
 
     public function storeUser($email, $username, $hashedPassword, $isAdmin)
     {
-        $stmt = $this->connection->prepare("INSERT INTO user (email, username, password, is_admin) VALUES (:email, :username, :password, :isAdmin)");
-        $stmt->execute([
+        $this->storeUserStmt->execute([
             'email' => $email,
             'username' => $username,
             'password' => $hashedPassword,
