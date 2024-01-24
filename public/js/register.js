@@ -21,7 +21,7 @@
                     throw new Error(responseMessage["error"]);
                 }
                 else {
-                    window.location.replace("../login/login.html");
+                    window.location.replace("../login.html");
                 }
             })
             .catch((errorMsg) => {

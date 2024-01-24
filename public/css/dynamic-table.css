@@ -1,0 +1,94 @@
+.clipContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+    min-width: 600px;
+}
+
+.privatesAndPublicsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+    min-width: 1200px;
+}
+
+.clipTable {
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2px 6px 4px 6px;
+    border-spacing: 0px;
+    box-shadow: 5px 5px 5px rgb(203, 197, 197);
+    background-color: rgb(231, 241, 250);
+}
+
+.privatesAndPublicsTable {
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2px 6px 4px 6px;
+    border-spacing: 0px;
+    box-shadow: 5px 5px 5px rgb(203, 197, 197);
+    background-color: rgb(231, 241, 250);
+}
+
+.tableHeader {
+    width: 33%;
+    color: white;
+    background-color: rgb(63, 64, 64);
+}
+
+.bigTableHeader {
+    width: 50%;
+    color: green;
+    background-color: rgb(0, 2, 3);
+}
+
+.tableBody {
+    width: 33%;
+    color: black;
+    background-color: rgb(213, 213, 220);
+}
+
+.headerElement {
+    padding: 10px 15px 10px 15px;
+}
+
+.bigHeaderElement {
+    width: 50%;
+}
+
+.borderData {
+    min-width: 400px;
+    max-width: 600px;
+    overflow-wrap: break-word;
+    border: 1px solid;
+    border-image: linear-gradient(to bottom, rgb(203, 203, 203), rgb(109, 109, 109)) 0 1;
+}
+
+.contentDescription {
+    max-width: 200px;
+    overflow-wrap: break-word;
+    border-right: 1px solid;
+    border-image: linear-gradient(to bottom, rgb(203, 203, 203), rgb(109, 109, 109)) 0 1;
+}
+
+.tableRow:nth-of-type(odd) {
+    background-color: white;
+}
+
+.clipName {
+    
+}
+
+.float-container {
+    border: 3px solid #fff;
+    padding: 20px;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}

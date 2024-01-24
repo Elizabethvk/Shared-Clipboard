@@ -27,29 +27,26 @@ class Db
             ]
         );
 
-        $this->loginValidationStmt = $this->connection->prepare("select 1 from user where email=:email and password=:password");
-        $this->userByEmailStmt = $this->connection->prepare("select * from user where email=:email");
+        $this->loginValidationStmt = $this->connection->prepare("SELECT 1 FROM user WHERE email=:email AND password=:password");
+        $this->userByEmailStmt = $this->connection->prepare("SELECT * FROM user WHERE email=:email");
     }
 
     public function validLogin($email, $password)
     {
         $this->loginValidationStmt->execute(['email' => $email, 'password' => $password]);
-        if ($this->loginValidationStmt->fetchColumn()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool) $this->loginValidationStmt->fetchColumn();
+    }
+
+    public function storeAuthToken($userId, $token, $expirationTime)
+    {
+        $stmt = $this->connection->prepare("insert into auth_token (user_id, token, expiration_at) values (?, ?, ?)");
+        $stmt->execute([$userId, $token, $expirationTime]);
     }
 
     public function getUserByEmail($email)
     {
         $this->userByEmailStmt->execute(['email' => $email]);
-        $user = $this->loginValidationStmt->fetch();
-        if ($user) {
-            return $user;
-        } else {
-            return null;
-        }
+        return $this->userByEmailStmt->fetch();
     }
 }
 
