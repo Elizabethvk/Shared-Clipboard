@@ -8,9 +8,12 @@ class Db
     private $loginValidationStmt;
     private $userByEmailStmt;
     private $userByUsernameStmt;
+    private $userByIdStmt;
     private $storeAuthTokenStmt;
     private $removeAuthTokenStmt;
     private $storeUserStmt;
+    private $publicClipsForSubscribedUserForIdStmt;
+    private $isAdminByIdStmt;
 
     public function __construct()
     {
@@ -36,12 +39,17 @@ class Db
         $this->storeAuthTokenStmt = $this->connection->prepare("INSERT INTO auth_token (user_id, token, expires_at) VALUES (:userId, :token, :expirationTime)");
         $this->removeAuthTokenStmt = $this->connection->prepare("DELETE FROM auth_token WHERE user_id = :userId");
         $this->storeUserStmt = $this->connection->prepare("INSERT INTO user (email, username, password, is_admin) VALUES (:email, :username, :password, :isAdmin)");
-    }
+        $this->userByIdStmt = $this->connection->prepare("SELECT * FROM user WHERE id=:id");
 
-    public function validLogin($email, $password)
-    {
-        $this->loginValidationStmt->execute(['email' => $email, 'password' => $password]);
-        return (bool) $this->loginValidationStmt->fetchColumn();
+        $this->publicClipsForSubscribedUserForIdStmt = $this->connection->prepare(
+            "SELECT clip.id FROM subscription " .
+            "JOIN user as subscriber ON subscription.subscriber_id = subscriber.id " .
+            "JOIN user as owner ON subscription.user_id = owner.id " .
+            "JOIN clip ON clip.owner_id = owner.id " .
+            "WHERE subscriber.id=:id AND clip.is_public = true " .
+            "LIMIT :offset, :limit"
+        );
+        $this->isAdminByIdStmt = $this->connection->prepare("SELECT is_admin FROM user WHERE id = :id");
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -65,10 +73,30 @@ class Db
         return $this->userByUsernameStmt->fetch();
     }
 
+    public function getUserById($id)
+    {
+        $this->userByIdStmt->execute(['id' => $id]);
+        return $this->userByIdStmt->fetch();
+    }
+
+    // the first returned record is page*limit
+    // zero indexed in page
+    public function getPublicClipsUserSubscribedToById($id, $limit, $page)
+    {
+        $this->publicClipsForSubscribedUserForIdStmt->execute(['id' => $id, 'limit' => $limit, 'offset' => $page * $limit]);
+        return $this->publicClipsForSubscribedUserForIdStmt->fetchAll();
+    }
+
     public function removeAuthToken($user_id)
     {
         $this->removeAuthTokenStmt->bindParam(":userId", $user_id, PDO::PARAM_INT);
         $this->removeAuthTokenStmt->execute();
+    }
+
+    public function isUserAdminById($user_id)
+    {
+        $this->isAdminByIdStmt->execute(["id" => $user_id]);
+        return $this->isAdminByIdStmt->fetch()['is_admin'];
     }
 
     public function storeUser($email, $username, $hashedPassword, $isAdmin)

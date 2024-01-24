@@ -1,8 +1,8 @@
 <?php
-session_start();
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
+
+session_start();
 
 $response = [
     'success' => false,
@@ -15,33 +15,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        // Validate email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $response['errors']['email'] = 'Invalid email address';
+        $user = $db->getUserByEmail($email);
+
+        if ($user && password_verify($enteredPassword, $user['password'])) {
+            $token = bin2hex(random_bytes(32)); // Generate a random token
+            $expirationTime = date('Y-m-d H:i:s', strtotime('+24 hours'));
+
+            // Store the token in the database
+            $db->storeAuthToken($user['id'], $token, $expirationTime);
+
+            // Set session variables
+            $_SESSION['logged_in'] = true;
+            $_SESSION['user'] = $user;
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['auth_token'] = $token;
+
+            $response['success'] = true;
+            $response['message'] = 'Login successful';
+
+            if ($user['is_admin']) {
+                header("Location: home_admin.php");
+            } else {
+                header("Location: home_user.php");
+            }
+            exit();
         } else {
             // Check if the user exists and the password is correct
-            $db = new Db();
-            $user = $db->getUserByEmail($email);
-            if ($user && password_verify($password, $user['password'])) {
-                // Generate a random token
-                $token = bin2hex(random_bytes(32));
-                $expirationTime = date('Y-m-d H:i:s', strtotime('+24 hours'));
-
-                // Store the token in the database
-                $db->storeAuthToken($user['id'], $token, $expirationTime);
-
-                // Set session variables
-                $_SESSION['logged_in'] = true;
-                $_SESSION['user'] = $user;
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['auth_token'] = $token;
-
-                $response['success'] = true;
-                $response['message'] = 'Login successful';
-            } else {
-                // Invalid login credentials
-                $response['errors']['login'] = 'Invalid email or password';
-            }
+            $response['errors']['login'] = 'Invalid email or password';
         }
     } else {
         // Missing email or password in the request
