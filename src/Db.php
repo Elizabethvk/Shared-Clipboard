@@ -39,8 +39,12 @@ class Db
 
     public function storeAuthToken($userId, $token, $expirationTime)
     {
-        $stmt = $this->connection->prepare("insert into auth_token (user_id, token, expiration_at) values (?, ?, ?)");
-        $stmt->execute([$userId, $token, $expirationTime]);
+        $stmt = $this->connection->prepare("insert into auth_token (user_id, token, expires_at) values (:userId, :token, :expirationTime)");
+        $stmt->execute([
+            'userId' => $userId,
+            'token' => $token,
+            'expirationTime' => $expirationTime,
+        ]);
     }
 
     public function getUserByEmail($email)

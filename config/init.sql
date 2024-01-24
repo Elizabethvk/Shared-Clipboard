@@ -19,13 +19,13 @@ create table if not exists `user`(
     constraint pk_user primary key (id)
 );
 
-create table if not exists auth_tokens(
+create table if not exists auth_token(
     id int unique not null auto_increment,
     user_id int not null,
     token varchar(255) not null,
     expires_at timestamp not null,
     
-    primary key (id)
+    primary key (id),
     foreign key (user_id) references user(id)
 );
 
