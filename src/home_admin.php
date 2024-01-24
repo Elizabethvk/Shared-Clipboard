@@ -47,7 +47,7 @@
                 <thead class='table-header'>
                     <tr>
                         <th class='header-element'>Name</th>
-                        <th class='header-element'>Types</th>
+                        <th class='header-element'>Type</th>
                         <th class='header-element'>Private</th>
                     </tr>
                 </thead>
@@ -72,7 +72,7 @@
                 <thead class='table-header'>
                     <tr>
                         <th class='header-element'>Name</th>
-                        <th class='header-element'>Types</th>
+                        <th class='header-element'>Type</th>
                         <th class='header-element'>Subscribe</th>
                     </tr>
                 </thead>

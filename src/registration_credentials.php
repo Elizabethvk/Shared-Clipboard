@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query = "insert into `user` (email, username, password, is_admin) values ('$email', '$username', '$hashedPassword', false)";
             $sql = mysqli_query($conn, $query) or die("Could not perform the query");
             
-            echo json_encode(['success' => true, 'message' => 'Registration successful']);
+            // echo json_encode(['success' => true, 'message' => 'Registration successful']);
+            header("Location: home_user.php");
             exit;
         } else {
             // If there are errors, return them as a JSON response
@@ -62,4 +63,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>
+// ?>
