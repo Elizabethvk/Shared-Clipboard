@@ -44,10 +44,11 @@ if (!isset($_SESSION['logged_in'])) {
         <!-- TODO Tsvetelin : Print from the transformers array -->
         <label for="res_type">Поддържани трансформатори:</label>
         <select id="res_type" name="res_type">
-            <option value="html">HTML</option>
+            <option value="auto">Авто</option>
+            <option value="text">Текст</option>
             <option value="php">PHP</option>
-            <option value="js">JavaScript</option>
-            <option value="link">Link</option>
+            <option value="link">линк</option>
+            <option value="bash">bash</option>
 
             <option value="other">Other</option>
         </select>

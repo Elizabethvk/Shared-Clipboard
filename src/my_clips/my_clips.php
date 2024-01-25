@@ -96,6 +96,9 @@ if (!isset($_SESSION['logged_in'])) {
                 echo "<td>";
                 echo "<button type=\"submit\" name=\"act\" value=\"$idx\">Изпълни</button>";
                 echo "</td>";
+                echo "<td>";
+                echo "<button type=\"submit\" name=\"delete\" value=\"$clip[id]\">Изтрий</button>";
+                echo "</td>";
                 echo "</tr>";
                 echo "</form>";
                 // TODO Tsvetelin : edit clips

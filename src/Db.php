@@ -25,6 +25,7 @@ class Db
     private $storeUserDuringImportStmt;
     private $subscriberCntForUserIdStmt;
     private $clipCntForUserIdStmt;
+    private $deleteClipForUserIdByIdStmt;
 
     public function __construct()
     {
@@ -72,6 +73,7 @@ class Db
         $this->deleteAllUsersStmt = $this->connection->prepare("DELETE FROM user");
         $this->subscriberCntForUserIdStmt = $this->connection->prepare("SELECT COUNT(1) FROM subscription WHERE user_id=:id");
         $this->clipCntForUserIdStmt = $this->connection->prepare("SELECT COUNT(1) FROM clip WHERE owner_id=:id");
+        $this->deleteClipForUserIdByIdStmt = $this->connection->prepare("DELETE FROM clip WHERE owner_id=:userId AND id=:clipId");
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -224,6 +226,11 @@ class Db
     public function deleteAllUsers()
     {
         $this->deleteAllUsersStmt->execute();
+    }
+
+    public function deleteSnippetForUser($userId, $clipId)
+    {
+        $this->deleteClipForUserIdByIdStmt->execute(["userId" => $userId, "clipId" => $clipId]);
     }
 }
 
