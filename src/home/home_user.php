@@ -1,5 +1,16 @@
+<?php
+session_start();
+
+// Check if the user is already logged in
+if (!isset($_SESSION['logged_in'])) {
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/login/login.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <title>Home</title>
     <link href="./dynamic-table.css" rel="stylesheet">
