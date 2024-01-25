@@ -1,5 +1,11 @@
 <?php
 
+function redirectBack()
+{
+    $previousPage = $_SERVER['HTTP_REFERER'];
+    header("Location: $previousPage");
+}
+
 class Transformer
 {
     public function transform($clip)
@@ -15,39 +21,39 @@ class Transformer
     }
 }
 
-// class PhpTransformer extends Transformer
-// {
-//     // taken from http://php.adamharvey.name/manual/en/function.eval.php#121190
-//     private function betterEval($code)
-//     {
-//         $tmp = tmpfile();
-//         $tmpf = stream_get_meta_data($tmp);
-//         $tmpf = $tmpf['uri'];
-//         fwrite($tmp, $code);
-//         $ret = include($tmpf);
-//         fclose($tmp);
-//         return $ret;
-//     }
+class PhpTransformer extends Transformer
+{
+    // taken from http://php.adamharvey.name/manual/en/function.eval.php#121190
+    private function betterEval($code)
+    {
+        $tmp = tmpfile();
+        $tmpf = stream_get_meta_data($tmp);
+        $tmpf = $tmpf['uri'];
+        fwrite($tmp, $code);
+        $ret = include($tmpf);
+        fclose($tmp);
+        return $ret;
+    }
 
-//     public function transform($clip)
-//     {
-//         if (!$this->canTransformFrom($clip['resource_type'])) {
-//             return null;
-//         }
-//         // TODO Tsvetelin : check for <?php tags
+    public function transform($clip)
+    {
+        if (!$this->canTransformFrom($clip['resource_type'])) {
+            return null;
+        }
+        // TODO Tsvetelin : check for <?php tags
 
-//         return $this->betterEval($clip['resource_data']);
-//     }
+        return $this->betterEval($clip['resource_data']);
+    }
 
-//     public function canTransformFrom($clipType)
-//     {
-//         return $clipType === 'php';
-//     }
-// public function canTransformTo()
-// {
-//     return ["Follow link"];
-// }
-// }
+    public function canTransformFrom($clipType)
+    {
+        return $clipType === 'php';
+    }
+    public function canTransformTo()
+    {
+        return "Run code";
+    }
+}
 
 class LinkTransformer extends Transformer
 {
@@ -74,7 +80,7 @@ class CopyTransformer extends Transformer
 {
     public function transform($clip)
     {
-        // TODO Tsvetelin : copy content
+        echo htmlspecialchars($clip['resource_data']);
     }
 
     public function canTransformFrom($clipType)
@@ -84,11 +90,15 @@ class CopyTransformer extends Transformer
 
     public function canTransformTo()
     {
-        return "Copy content";
+        return "Copy raw content";
     }
 }
 
-$transformers = [new LinkTransformer(), new CopyTransformer()];
+$transformers = [
+    new LinkTransformer(),
+    new PhpTransformer(),
+    new CopyTransformer(),
+];
 
 function availableTransformersFor($clipType)
 {

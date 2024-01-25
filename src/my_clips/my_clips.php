@@ -73,7 +73,7 @@ if (!isset($_SESSION['logged_in'])) {
 
             echo "<td>";
             if (strlen($clip["resource_data"]) <= 50) {
-                echo "$clip[resource_data]";
+                echo htmlspecialchars("$clip[resource_data]");
             } else {
                 echo "Resource data too long";
             }
@@ -95,6 +95,7 @@ if (!isset($_SESSION['logged_in'])) {
             echo "</td>";
             echo "</tr>";
             echo "</form>";
+            // TODO Tsvetelin : edit clips
         }
         ?>
     </table>
