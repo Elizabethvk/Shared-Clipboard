@@ -1,5 +1,6 @@
 body {
-    /* margin: 20px 30px; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 20px 30px;
     background-color: rgb(255, 236, 214);
 }
 

@@ -1,7 +1,6 @@
-/* Add this to your footer.css */
 body {
-    margin: 0;  /* Reset default body margin */
-    padding: 0; /* Reset default body padding */
+    margin: 0;
+    padding: 0; 
 }
 
 footer {

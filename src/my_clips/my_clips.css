@@ -1,0 +1,66 @@
+h1 {
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
+}
+
+#user-message {
+    text-align: center;
+    color: #900;
+}
+
+.section {
+    margin: 20px 100px;
+}
+
+.clip-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #e98300;
+}
+
+.clip-table th, .clip-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.clip-table th {
+    background-color: #e98300;
+    color: white;
+}
+
+.clip-table td {
+    background-color: #f9f9f9;
+}
+
+#privacy {
+    text-align: center;
+    width: 10%;
+}
+
+.list-clip-run-form {
+    margin: 0;
+    padding: 0;
+}
+
+select {
+    padding: 8px;
+    width: 100%;
+}
+
+button {
+    background-color: #e98300;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    /* width: 100%; */
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #bf6c00;
+}
