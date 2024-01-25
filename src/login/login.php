@@ -40,7 +40,7 @@ if (isset($_SESSION['logged_in'])) {
             </div>
 
             <p class="error" id="error">
-            <?php
+                <?php
                 if (isset($_SESSION["errormsg"])) {
                     echo $_SESSION["errormsg"];
                     // session_unset();

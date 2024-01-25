@@ -1,10 +1,26 @@
+<?php
+include  '../header.php';
+$active = "home";
+
+session_start();
+
+// Check if the user is already logged in
+if (!isset($_SESSION['logged_in'])) {
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/login/login.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
-    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Начало</title>
     <link href="./dynamic-table.css" rel="stylesheet">
     <script src="./home-user.js"></script>
-    <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon.png">
+    <link rel="icon" type="image/ico" sizes="32x32" href="../../img/favicon.ico">
 </head>
 <body>
     <a href="../add_clip/add_clip.php">Добави отрязък</a>
