@@ -1,6 +1,6 @@
 <?php
 $active = "my-clips";
-include  '../header.php';
+include '../header.php';
 
 session_start();
 
@@ -38,34 +38,63 @@ if (!isset($_SESSION['logged_in'])) {
             <th>Тип</th>
             <th>Съдържание</th>
             <th>Частни</th>
+            <th>Действия</th>
         </thead>
         <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            return;
+        }
         require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/src/transformers.php';
 
-        $snippets = $db->getSnippetsForUser($_SESSION['user_id']);
-        foreach ($snippets as $snip) {
+        function printValidActionsForClip($clip)
+        {
+            $transformableTo = array_map(function ($transformer) {
+                return $transformer->canTransformTo();
+            }, availableTransformersFor($clip['resource_type']));
+
+            echo '<select id="transformer_select" name="transformer_select">';
+            foreach ($transformableTo as $idx => $transformableToStr) {
+
+                echo "<option value=\"$idx\">$transformableToStr</option>";
+            }
+            echo '</select>';
+        }
+
+        $clips = $db->getSnippetsForUser($_SESSION['user_id']);
+        foreach ($clips as $idx => $clip) {
+            echo '<form class="list-clip-run-form" action="./transform_clip_action.php" method="post"
+            enctype="multipart/form-data">';
+
             echo "<tr>
-            <td>$snip[name]</td>
-            <td>$snip[description]</td>
-            <td>$snip[resource_type]</td>";
+            <td>$clip[name]</td>
+            <td>$clip[description]</td>
+            <td>$clip[resource_type]</td>";
 
             echo "<td>";
-            if (strlen($snip["resource_data"]) <= 50) {
-                echo "$snip[resource_data]";
+            if (strlen($clip["resource_data"]) <= 50) {
+                echo "$clip[resource_data]";
             } else {
                 echo "Resource data too long";
             }
             echo "</td>";
 
             echo "<td>";
-            if (!$snip["is_public"]) {
+            if (!$clip["is_public"]) {
                 echo "V";
             } else {
                 echo "X";
             }
             echo "</td>";
 
+            echo "<td>";
+            printValidActionsForClip($clip);
+            echo "</td>";
+            echo "<td>";
+            echo "<button type=\"submit\" name=\"act\" value=\"$idx\">Act</button>";
+            echo "</td>";
             echo "</tr>";
+            echo "</form>";
         }
         ?>
     </table>

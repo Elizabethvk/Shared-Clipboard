@@ -1,6 +1,6 @@
 <?php
 $active = "add-clip";
-include  '../header.php';
+include '../header.php';
 
 session_start();
 
@@ -37,6 +37,7 @@ if (!isset($_SESSION['logged_in'])) {
         <input placeholder="Име" name="name" required>
         <input placeholder="Описание" name="description">
 
+        <!-- TODO Tsvetelin : Print from the transformers array -->
         <label for="res_type">Поддържани трансформатори:</label>
         <select id="res_type" name="res_type">
             <option value="html">HTML</option>
