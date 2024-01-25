@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     } else {
-        $_SESSION["erorrmsg"] = 'Моля, попълнете липсващите полета!';
+        $_SESSION["errormsg"] = 'Моля, попълнете липсващите полета!';
         redirectToPreviousPage();
     }
 }

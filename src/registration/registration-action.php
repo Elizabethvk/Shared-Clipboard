@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirectToPreviousPage();
     } else {
         // Missing filled in information
-        $_SESSION["erorrmsg"] = 'Моля, попълнете липсващите полета!';
+        $_SESSION["errormsg"] = 'Моля, попълнете липсващите полета!';
         redirectToPreviousPage();
     }
 }

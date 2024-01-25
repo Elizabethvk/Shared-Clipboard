@@ -69,10 +69,10 @@ if (isset($_SESSION['logged_in'])) {
 
             <p class="error">
                 <?php
-                if (isset($_SESSION["erorrmsg"])) {
-                    echo $_SESSION["erorrmsg"];
+                if (isset($_SESSION["errormsg"])) {
+                    echo $_SESSION["errormsg"];
                     // session_unset();
-                    unset($_SESSION["erorrmsg"]);
+                    unset($_SESSION["errormsg"]);
                 }
                 ?>
             </p>
