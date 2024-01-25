@@ -3,7 +3,7 @@ $active = "add-clip";
 include $_SERVER['DOCUMENT_ROOT'] . '/src/header.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/src/footer.php';
 
-session_start();
+// session_start();
 
 // Check if the user is already logged in
 if (!isset($_SESSION['logged_in'])) {

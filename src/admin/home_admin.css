@@ -1,0 +1,75 @@
+h1 {
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
+}
+
+.form-change {
+    text-align: center;
+    max-width: 300px; /* Adjust the width as needed 
+    /* margin: 0 auto; 
+    margin-left: 30%;
+}
+
+#export {
+    text-align: center;
+    max-width: 300px;
+     margin: 0 auto; */
+    margin-left: 42.5%;   
+    width: 100%;
+    font-size: medium;
+    font-weight: bold;
+    background-color: #e98300;
+    color: white;
+    border: 1px solid #a55d00;
+    text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
+    height: 5%;
+}
+
+#export:hover {
+    background-color: #c26e00; 
+}
+
+/* #import-file {
+    text-align: center;
+    max-width: 300px;
+    /* margin: 0 auto;
+    margin-left: 42.5%;   
+    width: 100%;
+    font-size: medium;
+    font-weight: bold;
+    background-color: #e98300;
+    color: white;
+    border: 1px solid #693b00;
+    text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
+    height: 7%;
+}
+
+#import-file:hover {
+    background-color: #c26e00; 
+} */
+
+#import-submit {
+    text-align: center;
+    max-width: 300px; /* Adjust the width as needed */
+    /* margin: 0 auto; */
+    margin-left: 42.5%;   
+    width: 100%;
+    font-size: medium;
+    font-weight: bold;
+    background-color: #e98300;
+    color: white;
+    border: 1px solid #a55d00;
+    text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
+    height: 5%;
+    margin-top: 20px;
+}
+
+#import-submit:hover {
+    background-color: #c26e00; 
+}
+
+.form-change {
+    text-align: center;
+    /* vertical-align: 10px; */
+}
