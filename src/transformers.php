@@ -124,10 +124,34 @@ class CopyTransformer extends Transformer
     }
 }
 
+class BashTransformer extends Transformer
+{
+    public function transform($clip)
+    {
+        if (!$this->canTransformFrom($clip['resource_type'])) {
+            return null;
+        }
+        
+        exec($clip['resource_data'], $output);
+        echo implode(PHP_EOL, $output);
+    }
+
+    public function canTransformFrom($clipType)
+    {
+        return $clipType === 'bash';
+    }
+
+    public function canTransformTo()
+    {
+        return "Run bash script";
+    }
+}
+
 $transformers = [
     new LinkTransformer(),
     new PhpTransformer(),
     new FileDownloadOverLinkTransformer(),
+    new BashTransformer(),
 
     new CopyTransformer(),
 ];

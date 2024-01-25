@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-include '../auth_token.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/auth_token.php';
 
 function redirectToUserHome()
 {
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->storeUser($email, $username, $hashedPassword, false);
 
         $createdUser = $db->getUserByEmail($email);
-        
+
         sessionHandler($createdUser);
 
         redirectToPreviousPage();

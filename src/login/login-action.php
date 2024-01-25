@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-include '../auth_token.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . 'src/auth_token.php';
 
 function redirectToUserHome()
 {

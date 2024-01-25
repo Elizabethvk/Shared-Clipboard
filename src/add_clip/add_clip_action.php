@@ -49,6 +49,22 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
 
         $desc = $_POST['description'];
 
+        if($resourceType === 'auto')
+        {
+            if(preg_match('/^https?:\/\//', $clipContent))
+            {
+                $resourceType = 'link';
+            }else if(preg_match('/^<?php/', $clipContent))
+            {
+                $resourceType = 'php';
+            }else if(preg_match('/^\#\!/', $clipContent))
+            {
+                $resourceType = 'bash';
+            }else{
+                $resourceType = 'other';
+            }
+        }
+
         $user = getCurrentUser();
 
         if ($user) {
