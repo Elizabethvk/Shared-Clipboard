@@ -4,6 +4,12 @@ h1 {
     text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
 }
 
+p {
+    margin-left: 25%;
+    /* color: #ffffff; */
+    /* text-shadow: 0 0 5px #351e00, 0 0 10px #693b00; */
+}
+
 .container {
     max-width: 800px;
     margin: 20px auto;

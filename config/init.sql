@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `email`, `username`, `password`, `is_admin`, `created_at`, `last_updated_at`, `is_deleted`) VALUES
 (3, 'redovi1@redoven.com', 'redovi1', '$2y$10$nYHQyqOQFHom50kUwrqxOu3NvYrZboOmQhm2Wk9j19SRkIqHhRU8a', 0, '2024-01-25 21:48:38', '2024-01-25 21:48:38', 0),
 (4, 'redovi2@redoven.com', 'redovi2', '$2y$10$rcdtO4yOBbcg/rbUiLz6keyqpQg/OPzrNtE5L.GDQKwdp6/Q7Nu/i', 0, '2024-01-25 21:49:05', '2024-01-25 21:49:05', 0),
-(5, 'admin@adminov.com', 'adminov', '$2y$10$oPaSV8mByhT0/zINgG26qODXox/9r3bc4HLta13IJF2Yh/nkV1NL6', 1, '2024-01-25 21:52:45', '2024-01-25 21:53:03', 0);
+(5, 'admin@adminov.com', 'kostadinov', '$2y$10$oPaSV8mByhT0/zINgG26qODXox/9r3bc4HLta13IJF2Yh/nkV1NL6', 1, '2024-01-25 21:52:45', '2024-01-25 22:21:34', 0);
 
 
 ALTER TABLE `auth_token`
