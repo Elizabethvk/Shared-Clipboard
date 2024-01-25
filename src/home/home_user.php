@@ -7,6 +7,10 @@ if (!isset($_SESSION['logged_in'])) {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/login/login.php');
     exit();
 }
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+
+$subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -25,29 +29,45 @@ if (!isset($_SESSION['logged_in'])) {
 
 <body>
     <h1>Начало</h1>
-    <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
-    // function getCurrentUser()
-    // {
-    //     global $db;
-    //     if (isset($_SESSION["logged_in"]) && $_SESSION['logged_in']) {
-    //         return $db->getUserById($_SESSION['user_id']);
-    //     } else {
-    //         return null;
-    //     }
-    // }
+    <h2>Публични отрезки на вашите абонаменти:</h2>
 
-    $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
-    echo "Последователи: ";
-    echo $subCnt;
-    echo "<br>";
+    <?php if (isset($subscribedUsers) && !empty($subscribedUsers)): ?>
+        <table class="subscribed-users-table">
+            <thead>
+                <tr>
+                    <th>Име</th>
+                    <th>Описание</th>
+                    <th>Тип</th>
+                    <th>Съдържание</th>
+                    <th>Собственик</th>
+                    <th>Качено на</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($subscribedUsers as $user): ?>
+                    <?php
+                    $publicClips = $db->getPublicClipsForUser($user['id']);
+                    $user = getCurrentUser();
+                    $username = $user['username'];
+                    ?>
+                    <?php foreach ($publicClips as $clip): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($clip['name']) ?></td>
+                            <td><?= htmlspecialchars($clip['description']) ?></td>
+                            <td><?= htmlspecialchars($clip['resource_type']) ?></td>
+                            <td><?= htmlspecialchars($clip['resource_data']) ?></td>
+                            <td><?= htmlspecialchars($user['username']) ?></td>
+                            <td><?= htmlspecialchars($clip['uploaded_at']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No subscribed users found.</p>
+    <?php endif; ?>
 
-    $clipCnt = $db->getClipCntForUserIds(getCurrentUser()['id']);
-    echo "Брой отрязъци: ";
-    echo $clipCnt;
-    echo "<br>";
-    ?>
 </body>
 
 </html>

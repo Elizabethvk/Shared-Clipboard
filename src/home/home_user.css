@@ -3,3 +3,68 @@ h1 {
     color: #ffffff;
     text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
 }
+
+h2 {
+    margin-left: 10%;
+}
+
+#user-message {
+    text-align: center;
+    color: #900;
+}
+
+.section {
+    margin: 20px 100px;
+}
+
+.subscribed-users-table {
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #e98300;
+    margin-left: 10%;
+}
+
+.subscribed-users-table th, .subscribed-users-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.subscribed-users-table th {
+    background-color: #e98300;
+    color: white;
+}
+
+.subscribed-users-table td {
+    background-color: #f9f9f9;
+}
+
+#privacy {
+    text-align: center;
+    width: 10%;
+}
+
+.list-clip-run-form {
+    margin: 0;
+    padding: 0;
+}
+
+select {
+    padding: 8px;
+    width: 100%;
+}
+
+button {
+    background-color: #e98300;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #bf6c00;
+}
