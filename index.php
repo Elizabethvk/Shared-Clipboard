@@ -8,7 +8,7 @@ if ($config['auth']['disable_auth']) {
 	$_SESSION['user_id'] = 1;
 }
 
-if ($_SESSION['user']) {
+if ($_SESSION['logged_in']) {
 	// user is authenticated
 	header('Location: src/home/home_user.php');
 } else {
