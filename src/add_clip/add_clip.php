@@ -38,6 +38,7 @@
 
         <label for="myCheckbox">Личен</label>
         <input type="checkbox" name="private">
+        <!-- TODO Tsvetelin : input file -->
 
         <button class="btn" id="save-button" type="submit" name="save">Качи</button>
 
