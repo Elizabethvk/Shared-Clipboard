@@ -15,6 +15,7 @@ class Db
     private $storeClipStmt;
     private $publicClipsForSubscribedUserForIdStmt;
     private $isAdminByIdStmt;
+    private $snippetsByOwnerIdStmt;
 
     public function __construct()
     {
@@ -52,6 +53,7 @@ class Db
         );
         $this->isAdminByIdStmt = $this->connection->prepare("SELECT is_admin FROM user WHERE id = :id");
         $this->storeClipStmt = $this->connection->prepare("INSERT INTO clip (name, description, resource_type, resource_data, is_public, owner_id) VALUES (:name, :description, :resourceType, :resourceData, :isPublic, :ownerId)");
+        $this->snippetsByOwnerIdStmt = $this->connection->prepare("SELECT * FROM clip WHERE  owner_id = :id");
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -121,6 +123,12 @@ class Db
             'isPublic' => $isPublic,
             'ownerId' => $ownerId,
         ]);
+    }
+
+    public function getSnippetsForUser($user_id)
+    {
+        $this->snippetsByOwnerIdStmt->execute(["id"=> $user_id]);
+        return $this->snippetsByOwnerIdStmt->fetchAll();
     }
 
 }

@@ -3,9 +3,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
 function redirectToAddClip()
 {
-    header('Location:http://' . $_SERVER['HTTP_HOST'] . '/src/add_clip/add_clip.php');
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . '/src/add_clip/add_clip.php';
+    header("Location:$url");
 }
-
 function redirectBack()
 {
     $previousPage = $_SERVER['HTTP_REFERER'];
@@ -14,12 +14,14 @@ function redirectBack()
 
 function redirectToIndex()
 {
-    header('Location:' . $_SERVER['DOCUMENT_ROOT'] . '/src/index.php');
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . '/src/index.php';
+    header("Location:$url");
 }
 
 function redirectToErrorPage($message)
 {
-    header('Location:' . $_SERVER['DOCUMENT_ROOT'] . "/src/error/error_page.php?message=$message");
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . "/src/error/error_page.php?message=$message";
+    header("Location:$url");
 }
 
 session_start();
@@ -43,18 +45,18 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
         $name = $_POST['name'];
         $resourceType = $_POST['res_type'];
         $clipContent = $_POST['clip_content'];
-        $isPublic = isset($_POST['public']);
+        $isPublic = !isset($_POST['private']);
 
         $desc = $_POST['description'];
 
         $user = getCurrentUser();
 
         if ($user) {
-            $_SESSION['msg'] = "Успешно добавен отрязък! $isPublic, $desc";
-
             $db->storeClip($name, $desc, $resourceType, $clipContent, $isPublic, $_SESSION['user_id']);
-
+            $_SESSION['msg'] = "Успешно добавен отрязък!";
             redirectBack();
+        } else {
+            redirectToErrorPage("Няма активен потребител!");
         }
     }
 } else {

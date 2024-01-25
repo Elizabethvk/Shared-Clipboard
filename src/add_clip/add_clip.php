@@ -36,8 +36,8 @@
 
         <input placeholder="Твоят отрязък тук" name="clip_content" required>
 
-        <label for="myCheckbox">Частен</label>
-        <input type="checkbox" name="public">
+        <label for="myCheckbox">Личен</label>
+        <input type="checkbox" name="private">
 
         <button class="btn" id="save-button" type="submit" name="save">Качи</button>
 
