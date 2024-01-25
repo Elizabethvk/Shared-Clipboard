@@ -39,10 +39,14 @@ class PhpTransformer extends Transformer
     {
         if (!$this->canTransformFrom($clip['resource_type'])) {
             return null;
-        }
-        // TODO Tsvetelin : check for <?php tags
+        }   
 
-        return $this->betterEval($clip['resource_data']);
+        $trimmed = trim($clip['resource_data']);
+        if (strpos($trimmed, '<?php') !== 0) {
+            $trimmed = "<?php $trimmed ?>";
+        }
+
+        return $this->betterEval($trimmed);
     }
 
     public function canTransformFrom($clipType)
