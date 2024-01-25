@@ -28,15 +28,15 @@ if (!isset($_SESSION['logged_in'])) {
     <?php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
-    function getCurrentUser()
-    {
-        global $db;
-        if (isset($_SESSION["logged_in"]) && $_SESSION['logged_in']) {
-            return $db->getUserById($_SESSION['user_id']);
-        } else {
-            return null;
-        }
-    }
+    // function getCurrentUser()
+    // {
+    //     global $db;
+    //     if (isset($_SESSION["logged_in"]) && $_SESSION['logged_in']) {
+    //         return $db->getUserById($_SESSION['user_id']);
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
     echo "Последователи: ";
