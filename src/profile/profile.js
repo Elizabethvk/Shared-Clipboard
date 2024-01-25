@@ -21,40 +21,25 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     function displayResults(users) {
-        const resultsContainer = document.getElementById('results');
-        resultsContainer.innerHTML = '';
+        const tbody = document.querySelector('#results table tbody');
+        tbody.innerHTML = ''; // Clear the existing content
 
         if (users.length === 0) {
-            resultsContainer.innerHTML = '<p>Няма намерени потребители с такъв никнейм.</p>';
+            tbody.innerHTML = '<tr><td colspan="2">Няма намерени потребители с такъв никнейм.</td></tr>';
             return;
         }
 
-        const table = document.createElement('table');
-        table.innerHTML = `
-            <thead>
-                <tr>
-                    <th>Никнейм</th>
-                    <th>Действие</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        `;
-
-        const tbody = table.querySelector('tbody');
         users.forEach(user => {
             const row = document.createElement('tr');
             const buttonText = user.isSubscribed ? 'Отписване' : 'Абониране';
 
             row.innerHTML = `
                 <td>${user.username}</td>
-                <td><button data-username="${user.username}" onclick="toggleSubscription('${user.username}', ${user.isSubscribed})">${buttonText}</button></td>
+                <td><button id=\"action-but\"data-username="${user.username}" onclick="toggleSubscription('${user.username}', ${user.isSubscribed})">${buttonText}</button></td>
             `;
 
             tbody.appendChild(row);
         });
-
-        resultsContainer.appendChild(table);
     }
 
     window.toggleSubscription = async function (username, isSubscribed) {
@@ -66,13 +51,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: `username=${encodeURIComponent(username)}`, // Make sure to encode the parameter
             });
-            
+
             if (response.ok) {
                 const data = await response.json();
-    
+
                 // Update the UI based on the new subscription status
                 updateSubscriptionUI(username, !isSubscribed, data.action);
-    
+
                 // Fetch the updated user list and refresh the display
                 fetchUpdatedUserList();
             } else {
@@ -90,29 +75,28 @@ document.addEventListener('DOMContentLoaded', function () {
         errorContainer.innerHTML = `<p>${message}</p>`;
     }
 
-});
-
-function updateSubscriptionUI(username, isSubscribed, action) {
-    const button = document.querySelector(`button[data-username="${username}"]`);
-    if (button) {
-        button.innerText = action === 'subscribe' ? 'Отписване' : 'Абониране';
-    }
-}
-
-async function fetchUpdatedUserList() {
-    try {
-        const searchInput = document.getElementById('search').value;
-        const response = await fetch(`/src/profile/search.php?username=${searchInput}`);
-        const data = await response.json();
-
-        if (response.ok) {
-            displayResults(data);
-        } else {
-            console.error('Error fetching updated user list:', data);
-            displayError('Server error. Please try again later.');
+    function updateSubscriptionUI(username, isSubscribed, action) {
+        const button = document.querySelector(`button[data-username="${username}"]`);
+        if (button) {
+            button.innerText = action === 'subscribe' ? 'Отписване' : 'Абониране';
         }
-    } catch (error) {
-        console.error('Error fetching updated user list:', error);
-        displayError('Error fetching updated user list. Please try again.');
     }
-}
+
+    async function fetchUpdatedUserList() {
+        try {
+            const searchInput = document.getElementById('search').value;
+            const response = await fetch(`/src/profile/search.php?username=${searchInput}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                displayResults(data);
+            } else {
+                console.error('Error fetching updated user list:', data);
+                displayError('Server error. Please try again later.');
+            }
+        } catch (error) {
+            console.error('Error fetching updated user list:', error);
+            displayError('Error fetching updated user list. Please try again.');
+        }
+    }
+});

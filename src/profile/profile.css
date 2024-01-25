@@ -1,0 +1,89 @@
+h1 {
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 25%;
+    font-weight: bold;
+    font-size: large;
+}
+
+#search {
+    width: 46%;
+    margin-left: 25%;
+    padding: 8px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: medium;
+}
+
+button {
+    padding: 10px;
+    background-color: #e98300;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: medium;
+    /* width: 100%; */
+}
+
+button:hover {
+    background-color: #bf6c00;
+}
+
+#results {
+    margin-top: 20px;
+    text-align: center; /* Center the content inside the results div */
+    width: 100%;
+
+}
+
+table {
+    width: 50%;
+    margin: 0 auto; /* Center the table */
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #e98300;
+    color: white;
+}
+
+#action {
+    width: 25%;
+}
+
+#action-but {
+    width: 100%;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+#error {
+    color: #900;
+    margin-top: 20px;
+}

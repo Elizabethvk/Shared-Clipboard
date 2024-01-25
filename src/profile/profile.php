@@ -27,7 +27,9 @@ if (!isset($_SESSION['logged_in'])) {
 </head>
 
 <body>
+    <h1>Профил</h1>
     <!-- <p id="user-message">
+        
         <?php
         if (isset($_SESSION['msg'])) {
             echo $_SESSION['msg'];
@@ -42,7 +44,20 @@ if (!isset($_SESSION['logged_in'])) {
         <button onclick="searchUsers()">Търси</button>
     </div>
 
-    <div id="results"></div>
+    <!-- <div id="results"></div> -->
+    <div id="results">
+        <table>
+            <thead>
+                <tr>
+                    <th>Никнейм</th>
+                    <th id="action">Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
 
     <div id="error"></div>
 
