@@ -16,6 +16,10 @@ class Db
     private $publicClipsForSubscribedUserForIdStmt;
     private $isAdminByIdStmt;
     private $snippetsByOwnerIdStmt;
+    private $searchUserByUsernameStmt;
+    private $searchUserFromSubscriber;
+    private $subscribeUserInfo;
+    private $unsubscribeUserInfo;
 
     public function __construct()
     {
@@ -54,6 +58,10 @@ class Db
         $this->isAdminByIdStmt = $this->connection->prepare("SELECT is_admin FROM user WHERE id = :id");
         $this->storeClipStmt = $this->connection->prepare("INSERT INTO clip (name, description, resource_type, resource_data, is_public, owner_id) VALUES (:name, :description, :resourceType, :resourceData, :isPublic, :ownerId)");
         $this->snippetsByOwnerIdStmt = $this->connection->prepare("SELECT * FROM clip WHERE  owner_id = :id");
+        $this->searchUserByUsernameStmt = $this->connection->prepare("SELECT id, email, username FROM user WHERE username LIKE :username");
+        $this->searchUserFromSubscriber = $this->connection->prepare("SELECT 1 FROM subscription WHERE subscriber_id = :subscriberId AND user_id = :targetUserId");
+        $this->subscribeUserInfo = $this->connection->prepare("INSERT INTO subscription (subscriber_id, user_id) VALUES (:subscriberId, :targetUserId)");
+        $this->unsubscribeUserInfo = $this->connection->prepare("DELETE FROM subscription WHERE subscriber_id = :subscriberId AND user_id = :targetUserId");
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -127,10 +135,54 @@ class Db
 
     public function getSnippetsForUser($user_id)
     {
-        $this->snippetsByOwnerIdStmt->execute(["id"=> $user_id]);
+        $this->snippetsByOwnerIdStmt->execute(["id" => $user_id]);
         return $this->snippetsByOwnerIdStmt->fetchAll();
     }
 
+    public function searchUserByUsername($username)
+    {
+        $this->searchUserByUsernameStmt->bindValue(':username', '%' . $username . '%', PDO::PARAM_STR);
+        $this->searchUserByUsernameStmt->execute();
+
+        return $this->searchUserByUsernameStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function toggleSubscription($subscriberId, $targetUsername)
+    {
+        $targetUser = $this->getUserByUsername($targetUsername);
+
+        if (!$targetUser) {
+            return ['error' => 'Target user not found'];
+        }
+
+        $targetUserId = $targetUser['id'];
+
+        if ($this->isUserSubscribed($subscriberId, $targetUserId)) {
+            $this->unsubscribeUser($subscriberId, $targetUserId);
+            return ['success' => true, 'action' => 'unsubscribe'];
+        } else {
+            $this->subscribeUser($subscriberId, $targetUserId);
+            return ['success' => true, 'action' => 'subscribe'];
+        }
+    }
+
+    public function isUserSubscribed($subscriberId, $targetUserId)
+    {
+        $this->searchUserFromSubscriber->execute(['subscriberId' => $subscriberId, 'targetUserId' => $targetUserId]);
+        return $this->searchUserFromSubscriber->fetchColumn() !== false;
+    }
+
+    public function subscribeUser($subscriberId, $targetUserId)
+    {
+        $this->subscribeUserInfo->execute(['subscriberId' => $subscriberId, 'targetUserId' => $targetUserId]);
+    }
+
+    public function unsubscribeUser($subscriberId, $targetUserId)
+    {
+        $this->unsubscribeUserInfo->execute(['subscriberId' => $subscriberId, 'targetUserId' => $targetUserId]);
+    }
 }
 
 $db = new Db();
+
+

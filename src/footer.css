@@ -1,0 +1,25 @@
+/* Add this to your footer.css */
+body {
+    margin: 0;  /* Reset default body margin */
+    padding: 0; /* Reset default body padding */
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+    background-color: #e98300;
+    color: white;
+}
+
+footer p {
+    margin-right: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 3px 2px 2px #532f00;
+    /* text-shadow: 0 0 5px #fff, 0 0 10px #fff; */
+}

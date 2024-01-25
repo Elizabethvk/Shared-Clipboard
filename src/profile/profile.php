@@ -1,6 +1,7 @@
 <?php
 $active = "profile";
-include '../header.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/src/header.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/src/footer.php';
 
 session_start();
 
@@ -21,12 +22,29 @@ if (!isset($_SESSION['logged_in'])) {
 
     <title>Профил</title>
     <link href="./profile.css" rel="stylesheet">
-    <!-- <script src="./home-user.js"></script> -->
+    <script src="./profile.js"></script>
     <link rel="icon" type="image/ico" sizes="32x32" href="../../img/favicon.ico">
 </head>
 
 <body>
+    <!-- <p id="user-message">
+        <?php
+        if (isset($_SESSION['msg'])) {
+            echo $_SESSION['msg'];
+        }
+        unset($_SESSION['msg']);
+        ?>
+    </p> -->
 
+    <div>
+        <label for="search">Търсене по никнейм:</label>
+        <input type="text" id="search" placeholder="Никнейм">
+        <button onclick="searchUsers()">Търси</button>
+    </div>
+
+    <div id="results"></div>
+
+    <div id="error"></div>
 
 </body>
 
