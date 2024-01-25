@@ -25,29 +25,7 @@ if (!isset($_SESSION['logged_in'])) {
 
 <body>
     <h1>Начало</h1>
-    <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
-    // function getCurrentUser()
-    // {
-    //     global $db;
-    //     if (isset($_SESSION["logged_in"]) && $_SESSION['logged_in']) {
-    //         return $db->getUserById($_SESSION['user_id']);
-    //     } else {
-    //         return null;
-    //     }
-    // }
-
-    $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
-    echo "Последователи: ";
-    echo $subCnt;
-    echo "<br>";
-
-    $clipCnt = $db->getClipCntForUserIds(getCurrentUser()['id']);
-    echo "Брой отрязъци: ";
-    echo $clipCnt;
-    echo "<br>";
-    ?>
 </body>
 
 </html>

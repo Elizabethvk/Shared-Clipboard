@@ -27,17 +27,22 @@ if (!isset($_SESSION['logged_in'])) {
 </head>
 
 <body>
-    <h1>Профил</h1>
-    <!-- <p id="user-message">
-        
-        <?php
-        if (isset($_SESSION['msg'])) {
-            echo $_SESSION['msg'];
-        }
-        unset($_SESSION['msg']);
-        ?>
-    </p> -->
+    <h1>Профил</h1><?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
+    $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
+    $clipCnt = $db->getClipCntForUserIds(getCurrentUser()['id']);
+    ?>
+    <div>
+    <p>
+        Здравей,
+        <?php echo getCurrentUser()['username'] ?>!
+    </p>
+    <p>Имаш <?php echo $subCnt;?> последователи.</p>
+    <p>Имаш <?php echo $clipCnt;?> отрязъци.</p>
+    </div>
+
+    <h1>Последвай приятел</h1>
     <div>
         <label for="search">Търсене по никнейм:</label>
         <input type="text" id="search" placeholder="Никнейм">

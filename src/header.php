@@ -2,6 +2,20 @@
     <link rel="stylesheet" type="text/css" href="/src/header.css">
 </head>
 
+<?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+
+session_start();
+
+function getCurrentUser()
+{
+    global $db;
+    if (isset($_SESSION["logged_in"]) && $_SESSION['logged_in']) {
+        return $db->getUserById($_SESSION['user_id']);
+    }
+}
+?>
+
 <body>
     <nav id="main-nav">
         <ul class="nav">
@@ -23,17 +37,6 @@
             </li>
 
             <?php
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-
-            session_start();
-            function getCurrentUser()
-            {
-                global $db;
-                if (isset($_SESSION["logged_in"]) && $_SESSION['logged_in']) {
-                    return $db->getUserById($_SESSION['user_id']);
-                } 
-            }
-
             $user = getCurrentUser();
             $isAdmin = $user && $user['is_admin'];
             if ($isAdmin) {
