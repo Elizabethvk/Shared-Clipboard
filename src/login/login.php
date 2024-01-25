@@ -1,48 +1,63 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-
-function redirectToUserHome()
-{
-    header('Location:' . $_SERVER['DOCUMENT_ROOT'] . '/src/home/home_user.php');
-}
-
-function redirectToErrorPage($message)
-{
-    header('Location:' . $_SERVER['DOCUMENT_ROOT'] . "/src/error/error_page.php?message=$message");
-}
-
 session_start();
-if (!isset($_SESSION['logged_in'])) {
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$_SESSION['logged_in']) {
-        if (isset($_POST['email'], $_POST['password'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-
-            $user = $db->getUserByEmail($email);
-
-            if ($user && password_verify($password, $user['password'])) {
-                $token = bin2hex(random_bytes(32)); // Generate a random token
-                $expirationTime = date('Y-m-d H:i:s', strtotime('+24 hours'));
-
-                // Store the token in the database
-                $db->storeAuthToken($user['id'], $token, $expirationTime);
-
-                $_SESSION['logged_in'] = true;
-                $_SESSION['user'] = $user;
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['auth_token'] = $token;
-
-                redirectToUserHome();
-            } else {
-                redirectToErrorPage('Invalid email or password');
-            }
-        } else {
-            // Missing email or password in the request
-            redirectToErrorPage('Invalid request');
-        }
-    }
-} else {
-    redirectToUserHome();
+// Check if the user is already logged in
+if (isset($_SESSION['logged_in'])) {
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/home/home_user.php');
+    exit();
 }
+
 ?>
+
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Вход</title>
+    <link rel="icon" type="image/ico" sizes="32x32" href="../img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./login.css">
+    <script src="./login.js" defer></script>
+</head>
+
+<body>
+    <section class="container">
+        <form id="login-form" class="login-form" action="./login-action.php" method="post"
+            enctype="multipart/form-data">
+            <h1 class="login-text">Вход</h1>
+
+            <div class="form-group">
+                <input class="input-group" type="email" placeholder="Имейл" name="email" id="email" required />
+                <p class="error" id="erroremail"></p>
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="input-group" placeholder="Парола" name="password" id="password"
+                    required />
+                <p class="error" id="errorpassword"></p>
+            </div>
+
+            <p class="error" id="error">
+            <?php
+                if (isset($_SESSION["erorrmsg"])) {
+                    echo $_SESSION["erorrmsg"];
+                    // session_unset();
+                    unset($_SESSION["erorrmsg"]);
+                }
+                ?>
+            </p>
+
+            <button class="btn" id="login-button" type="submit" name="save">Вход</button>
+
+
+            <p class="login-under-text">
+                Все още нямаш профил?
+                <a href="../registration/registration.php">Регистрирай се</a>
+            </p>
+        </form>
+    </section>
+</body>
+
+</html>

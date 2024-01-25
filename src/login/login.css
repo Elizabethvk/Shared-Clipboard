@@ -9,8 +9,8 @@ body {
   width: 100%;
   min-height: 100vh;
   /* background-color: #e2ebf1; */
-  background: rgb(235,95,25);
-  background: linear-gradient(-130deg, rgba(235,95,25,0.89) 0%, rgba(253,187,45,0.89) 100%);
+  background: rgb(235, 95, 25);
+  background: linear-gradient(-130deg, rgba(235, 95, 25, 0.89) 0%, rgba(253, 187, 45, 0.89) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,9 +94,9 @@ input:valid {
 
 .error {
   padding-bottom: 20px;
-padding-left: 10px;
+  padding-left: 10px;
   color: rgb(136, 24, 24);
-font-weight: bold;
+  font-weight: bold;
 }
 
 @media (max-width: 430px) {
