@@ -39,7 +39,7 @@ class PhpTransformer extends Transformer
     {
         if (!$this->canTransformFrom($clip['resource_type'])) {
             return null;
-        }   
+        }
 
         $trimmed = trim($clip['resource_data']);
         if (strpos($trimmed, '<?php') !== 0) {
@@ -80,6 +80,32 @@ class LinkTransformer extends Transformer
     }
 }
 
+class FileDownloadOverLinkTransformer extends Transformer
+{
+    public function transform($clip)
+    {
+        if (!$this->canTransformFrom($clip['resource_type'])) {
+            return null;
+        }
+
+        $file_url = "$clip[resource_data]";
+        header('Content-Type: application/octet-stream');
+        header("Content-Transfer-Encoding: Binary");
+        header("Content-disposition: attachment; filename=\"$clip[name]\"");
+        readfile($file_url);
+    }
+
+    public function canTransformFrom($clipType)
+    {
+        return $clipType === 'link';
+    }
+
+    public function canTransformTo()
+    {
+        return "Download pointed file";
+    }
+}
+
 class CopyTransformer extends Transformer
 {
     public function transform($clip)
@@ -101,6 +127,8 @@ class CopyTransformer extends Transformer
 $transformers = [
     new LinkTransformer(),
     new PhpTransformer(),
+    new FileDownloadOverLinkTransformer(),
+
     new CopyTransformer(),
 ];
 
