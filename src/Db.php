@@ -20,6 +20,9 @@ class Db
     private $searchUserFromSubscriber;
     private $subscribeUserInfo;
     private $unsubscribeUserInfo;
+    private $allUsersStmt;
+    private $deleteAllUsersStmt;
+    private $storeUserDuringImportStmt;
 
     public function __construct()
     {
@@ -45,6 +48,7 @@ class Db
         $this->storeAuthTokenStmt = $this->connection->prepare("INSERT INTO auth_token (user_id, token, expires_at) VALUES (:userId, :token, :expirationTime)");
         $this->removeAuthTokenStmt = $this->connection->prepare("DELETE FROM auth_token WHERE user_id = :userId");
         $this->storeUserStmt = $this->connection->prepare("INSERT INTO user (email, username, password, is_admin) VALUES (:email, :username, :password, :isAdmin)");
+        $this->storeUserDuringImportStmt = $this->connection->prepare("INSERT INTO user (id, email, username, password, is_admin) VALUES (:id, :email, :username, :password, :isAdmin)");
         $this->userByIdStmt = $this->connection->prepare("SELECT * FROM user WHERE id=:id");
 
         $this->publicClipsForSubscribedUserForIdStmt = $this->connection->prepare(
@@ -62,6 +66,8 @@ class Db
         $this->searchUserFromSubscriber = $this->connection->prepare("SELECT 1 FROM subscription WHERE subscriber_id = :subscriberId AND user_id = :targetUserId");
         $this->subscribeUserInfo = $this->connection->prepare("INSERT INTO subscription (subscriber_id, user_id) VALUES (:subscriberId, :targetUserId)");
         $this->unsubscribeUserInfo = $this->connection->prepare("DELETE FROM subscription WHERE subscriber_id = :subscriberId AND user_id = :targetUserId");
+        $this->allUsersStmt = $this->connection->prepare("SELECT * FROM user");
+        $this->deleteAllUsersStmt = $this->connection->prepare("DELETE FROM user");
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -114,6 +120,17 @@ class Db
     public function storeUser($email, $username, $hashedPassword, $isAdmin)
     {
         $this->storeUserStmt->execute([
+            'email' => $email,
+            'username' => $username,
+            'password' => $hashedPassword,
+            'isAdmin' => $isAdmin,
+        ]);
+    }    
+    
+    public function storeUserDuringImport($id, $email, $username, $hashedPassword, $isAdmin)
+    {
+        $this->storeUserDuringImportStmt->execute([
+            'id' => $id,
             'email' => $email,
             'username' => $username,
             'password' => $hashedPassword,
@@ -180,6 +197,17 @@ class Db
     public function unsubscribeUser($subscriberId, $targetUserId)
     {
         $this->unsubscribeUserInfo->execute(['subscriberId' => $subscriberId, 'targetUserId' => $targetUserId]);
+    }
+
+    public function getAllUsers()
+    {
+        $this->allUsersStmt->execute();
+        return $this->allUsersStmt->fetchAll();
+    }
+
+    public function deleteAllUsers()
+    {
+        $this->deleteAllUsersStmt->execute();
     }
 }
 
