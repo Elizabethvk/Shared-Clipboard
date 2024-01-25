@@ -1,6 +1,6 @@
 <?php
-include '../header.php';
 $active = "profile";
+include '../header.php';
 
 session_start();
 

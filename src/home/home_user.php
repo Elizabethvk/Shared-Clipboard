@@ -1,6 +1,6 @@
 <?php
-include  '../header.php';
 $active = "home";
+include  '../header.php';
 
 session_start();
 
@@ -23,6 +23,6 @@ if (!isset($_SESSION['logged_in'])) {
     <link rel="icon" type="image/ico" sizes="32x32" href="../../img/favicon.ico">
 </head>
 <body>
-    <a href="../add_clip/add_clip.php">Добави отрязък</a>
+
 </body>
 </html>

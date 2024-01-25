@@ -1,6 +1,6 @@
 <?php
-include  '../header.php';
 $active = "add-clip";
+include  '../header.php';
 
 session_start();
 
@@ -24,7 +24,6 @@ if (!isset($_SESSION['logged_in'])) {
 <body>
     <p id="user-message">
         <?php
-        session_start();
         if (isset($_SESSION['msg'])) {
             echo $_SESSION['msg'];
         }
