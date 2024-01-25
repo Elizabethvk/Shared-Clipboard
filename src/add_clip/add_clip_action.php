@@ -54,7 +54,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
             if(preg_match('/^https?:\/\//', $clipContent))
             {
                 $resourceType = 'link';
-            }else if(preg_match('/^<?php/', $clipContent))
+            }else if(preg_match('/^\<\?php/', $clipContent))
             {
                 $resourceType = 'php';
             }else if(preg_match('/^\#\!/', $clipContent))
