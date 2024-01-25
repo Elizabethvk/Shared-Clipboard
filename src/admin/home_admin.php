@@ -13,7 +13,7 @@ if (!isset($_SESSION['logged_in'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 
 <head>
     <title>Админ панел</title>
