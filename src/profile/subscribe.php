@@ -1,5 +1,5 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
 session_start();
 

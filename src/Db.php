@@ -23,6 +23,8 @@ class Db
     private $allUsersStmt;
     private $deleteAllUsersStmt;
     private $storeUserDuringImportStmt;
+    private $subscriberCntForUserIdStmt;
+    private $clipCntForUserIdStmt;
 
     public function __construct()
     {
@@ -68,6 +70,8 @@ class Db
         $this->unsubscribeUserInfo = $this->connection->prepare("DELETE FROM subscription WHERE subscriber_id = :subscriberId AND user_id = :targetUserId");
         $this->allUsersStmt = $this->connection->prepare("SELECT * FROM user");
         $this->deleteAllUsersStmt = $this->connection->prepare("DELETE FROM user");
+        $this->subscriberCntForUserIdStmt = $this->connection->prepare("SELECT COUNT(1) FROM subscription WHERE user_id=:id");
+        $this->clipCntForUserIdStmt = $this->connection->prepare("SELECT COUNT(1) FROM clip WHERE owner_id=:id");
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -125,8 +129,8 @@ class Db
             'password' => $hashedPassword,
             'isAdmin' => $isAdmin,
         ]);
-    }    
-    
+    }
+
     public function storeUserDuringImport($id, $email, $username, $hashedPassword, $isAdmin)
     {
         $this->storeUserDuringImportStmt->execute([
@@ -154,6 +158,18 @@ class Db
     {
         $this->snippetsByOwnerIdStmt->execute(["id" => $user_id]);
         return $this->snippetsByOwnerIdStmt->fetchAll();
+    }
+
+    public function getSubscriberCountForUserId($user_id)
+    {
+        $this->subscriberCntForUserIdStmt->execute(["id" => $user_id]);
+        return $this->subscriberCntForUserIdStmt->fetchColumn();
+    }
+
+    public function getClipCntForUserIds($user_id)
+    {
+        $this->clipCntForUserIdStmt->execute(["id" => $user_id]);
+        return $this->clipCntForUserIdStmt->fetchColumn();
     }
 
     public function searchUserByUsername($username)
