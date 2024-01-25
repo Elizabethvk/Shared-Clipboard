@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 
 <head>
     <meta charset="UTF-8">
@@ -11,10 +11,10 @@
 
 <body>
     <div class="container">
-        <h1>Oops! An error occurred.</h1>
+        <h1>Опа! Грешка.</h1>
         <?php
-        $errorMessage = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : 'No error message provided.';
-        echo '<p>Error Message: ' . $errorMessage . '</p>';
+        $errorMessage = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : 'Няма съобщение за грешка.';
+        echo '<p>Съобщение за грешка: ' . $errorMessage . '</p>';
         ?>
     </div>
 </body>
