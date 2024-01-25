@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Shared clipboard</title>
-</head>
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
 
-<body>
-	<?php
-	// require_once("src/Db.php");
-	// $db = new Db();
-	// echo $db->getConnection()->prepare("select * from user")->execute();
-	
-	?>
-</body>
-
-</html>
-
-<?php // home.php
 session_start();
+if ($config['auth']['disable_auth']) {
+	$_SESSION['logged_in'] = true;
+	$_SESSION['user_id'] = 1;
+}
+
 if ($_SESSION['user']) {
 	// user is authenticated
 	header('Location: src/home/home_user.php');

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="utf-8">
+    <title>Добави отрязък</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon.png">
+</head>
+
+<body>
+    <p id="user-message">
+        <?php
+        session_start();
+        if (isset($_SESSION['msg'])) {
+            echo $_SESSION['msg'];
+        }
+        unset($_SESSION['msg']);
+        ?>
+    </p>
+    <form id="add-clip-form" class="add-clip-form" action="./add_clip_action.php" method="post"
+        enctype="multipart/form-data">
+        <h1>Добави отрязък</h1>
+
+        <input placeholder="Име" name="name" required>
+        <input placeholder="Описание" name="description">
+
+        <label for="res_type">Поддържани трансформатори:</label>
+        <select id="res_type" name="res_type">
+            <option value="html">HTML</option>
+            <option value="php">PHP</option>
+            <option value="js">JavaScript</option>
+            <option value="link">Link</option>
+
+            <option value="other">Other</option>
+        </select>
+
+        <input placeholder="Твоят отрязък тук" name="clip_content" required>
+
+        <label for="myCheckbox">Частен</label>
+        <input type="checkbox" name="public">
+
+        <button class="btn" id="save-button" type="submit" name="save">Качи</button>
+
+    </form>
+</body>
+
+</html>

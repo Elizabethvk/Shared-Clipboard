@@ -12,6 +12,7 @@ class Db
     private $storeAuthTokenStmt;
     private $removeAuthTokenStmt;
     private $storeUserStmt;
+    private $storeClipStmt;
     private $publicClipsForSubscribedUserForIdStmt;
     private $isAdminByIdStmt;
 
@@ -50,6 +51,7 @@ class Db
             "LIMIT :offset, :limit"
         );
         $this->isAdminByIdStmt = $this->connection->prepare("SELECT is_admin FROM user WHERE id = :id");
+        $this->storeClipStmt = $this->connection->prepare("INSERT INTO clip (name, description, resource_type, resource_data, is_public, owner_id) VALUES (:name, :description, :resourceType, :resourceData, :isPublic, :ownerId)");
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -106,6 +108,18 @@ class Db
             'username' => $username,
             'password' => $hashedPassword,
             'isAdmin' => $isAdmin,
+        ]);
+    }
+
+    public function storeClip($name, $description, $resourceType, $resourceData, $isPublic, $ownerId)
+    {
+        $this->storeClipStmt->execute([
+            'name' => $name,
+            'description' => $description,
+            'resourceType' => $resourceType,
+            'resourceData' => $resourceData,
+            'isPublic' => $isPublic,
+            'ownerId' => $ownerId,
         ]);
     }
 
