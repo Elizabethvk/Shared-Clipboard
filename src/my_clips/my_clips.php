@@ -76,7 +76,7 @@ if (!isset($_SESSION['logged_in'])) {
             if (strlen($clip["resource_data"]) <= 50) {
                 echo htmlspecialchars("$clip[resource_data]");
             } else {
-                echo "Resource data too long";
+                echo "Съдържанието на ресурса е твърде дълго.";
             }
             echo "</td>";
 
