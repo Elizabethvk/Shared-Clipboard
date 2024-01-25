@@ -45,12 +45,27 @@ if (!isset($_SESSION['logged_in'])) {
         $snippets = $db->getSnippetsForUser($_SESSION['user_id']);
         foreach ($snippets as $snip) {
             echo "<tr>
-            <td>name</td>
-            <td>desc</td>
-            <td>type</td>
-            <td>content</td>
-            <td>private?</td>
-            </tr>";
+            <td>$snip[name]</td>
+            <td>$snip[description]</td>
+            <td>$snip[resource_type]</td>";
+
+            echo "<td>";
+            if (strlen($snip["resource_data"]) <= 50) {
+                echo "$snip[resource_data]";
+            } else {
+                echo "Resource data too long";
+            }
+            echo "</td>";
+
+            echo "<td>";
+            if (!$snip["is_public"]) {
+                echo "V";
+            } else {
+                echo "X";
+            }
+            echo "</td>";
+
+            echo "</tr>";
         }
         ?>
     </table>
