@@ -30,6 +30,20 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 <body>
     <h1>Начало</h1>
 
+    <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+
+    $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
+    $clipCnt = $db->getClipCntForUserIds(getCurrentUser()['id']);
+    ?>
+
+    <div class="user-info">
+        <h3>
+            Здравей,
+            <?php echo getCurrentUser()['username'] ?>!
+        </h3>
+    </div>
+
     <h2>Публични отрезки на вашите абонаменти:</h2>
 
     <?php if (isset($subscribedUsers) && !empty($subscribedUsers)): ?>
@@ -48,17 +62,34 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
                 <?php foreach ($subscribedUsers as $user): ?>
                     <?php
                     $publicClips = $db->getPublicClipsForUser($user['id']);
-                    $user = getCurrentUser();
-                    $username = $user['username'];
+
+                    // $user = getCurrentUser();
+                    // $username = $user['username'];
                     ?>
                     <?php foreach ($publicClips as $clip): ?>
+                        <?php
+                        $owner = $db->getUserById($clip['owner_id']);
+                        $username = $owner['username'];
+                        ?>
                         <tr>
-                            <td><?= htmlspecialchars($clip['name']) ?></td>
-                            <td><?= htmlspecialchars($clip['description']) ?></td>
-                            <td><?= htmlspecialchars($clip['resource_type']) ?></td>
-                            <td><?= htmlspecialchars($clip['resource_data']) ?></td>
-                            <td><?= htmlspecialchars($user['username']) ?></td>
-                            <td><?= htmlspecialchars($clip['uploaded_at']) ?></td>
+                            <td>
+                                <?= htmlspecialchars($clip['name']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($clip['description']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($clip['resource_type']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($clip['resource_data']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($username) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($clip['uploaded_at']) ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endforeach; ?>

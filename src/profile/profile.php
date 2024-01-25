@@ -27,19 +27,36 @@ if (!isset($_SESSION['logged_in'])) {
 </head>
 
 <body>
-    <h1>Профил</h1><?php
+    <h1>Профил</h1>
+    
+    <?php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
 
     $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
     $clipCnt = $db->getClipCntForUserIds(getCurrentUser()['id']);
     ?>
-    <div>
-    <p>
-        Здравей,
-        <?php echo getCurrentUser()['username'] ?>!
-    </p>
-    <p>Имаш <?php echo $subCnt;?> последователи.</p>
-    <p>Имаш <?php echo $clipCnt;?> отрязъци.</p>
+
+    <div class="user-info">
+        <p>
+            Здравей,
+            <?php echo getCurrentUser()['username'] ?>!
+        </p>
+        <p>Имаш
+            <?php 
+            echo $subCnt;
+            echo " последовател";
+            echo $subCnt === 1 ? '.' : 'и.';
+            // echo $subCnt; 
+            ?> 
+            <!-- последователи. -->
+        </p>
+        <p>Имаш
+        <?php 
+            echo $clipCnt;
+            echo $clipCnt === 1 ? ' отрязък.' : ' отрязъци.';
+            ?> 
+             <!-- отрязъци. -->
+        </p>
     </div>
 
     <h1>Последвай приятел</h1>

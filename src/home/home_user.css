@@ -8,6 +8,12 @@ h2 {
     margin-left: 10%;
 }
 
+.user-info {
+    margin-left: 10%;
+    /* color: #ffffff; */
+    /* text-shadow: 0 0 5px #351e00, 0 0 10px #693b00; */
+}
+
 #user-message {
     text-align: center;
     color: #900;
