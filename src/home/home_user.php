@@ -96,7 +96,9 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
             </tbody>
         </table>
     <?php else: ?>
-        <h3>Не сте абонирани за никого все още!</h3>
+        <div class="user-info">
+            <h3>Не сте абонирани за никого все още!</h3>
+        </div>
     <?php endif; ?>
 
 </body>
