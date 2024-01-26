@@ -47,7 +47,7 @@ if (!isset($_SESSION['logged_in'])) {
             <option value="auto">Авто</option>
             <option value="text">Текст</option>
             <option value="php">PHP</option>
-            <option value="link">линк</option>
+            <option value="link">Линк</option>
             <option value="bash">bash</option>
 
             <option value="other">Other</option>
