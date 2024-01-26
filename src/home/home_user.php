@@ -24,7 +24,6 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
     <!-- <link href="./dynamic-table.css" rel="stylesheet"> -->
     <link href="./home_user.css" rel="stylesheet">
     <script src="./home-user.js"></script>
-    <link rel="icon" type="image/ico" sizes="32x32" href="../../img/favicon.ico">
 </head>
 
 <body>

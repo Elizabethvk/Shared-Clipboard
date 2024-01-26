@@ -17,7 +17,6 @@ if (isset($_SESSION['logged_in'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Вход</title>
-    <link rel="icon" type="image/ico" sizes="32x32" href="../img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="./login.css">
     <script src="./login.js" defer></script>
 </head>

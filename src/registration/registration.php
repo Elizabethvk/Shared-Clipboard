@@ -19,7 +19,6 @@ if (isset($_SESSION['logged_in'])) {
     <title>Регистрация</title>
     <script defer src="./registration.js"></script>
     <link rel="stylesheet" type="text/css" href="./registration.css" />
-    <link rel="icon" type="image/ico" sizes="32x32" href="../img/favicon.ico" />
 </head>
 
 <body>

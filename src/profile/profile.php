@@ -23,7 +23,6 @@ if (!isset($_SESSION['logged_in'])) {
     <title>Профил</title>
     <link href="./profile.css" rel="stylesheet">
     <script src="./profile.js"></script>
-    <link rel="icon" type="image/ico" sizes="32x32" href="/img/favicon.ico">
 </head>
 
 <body>
