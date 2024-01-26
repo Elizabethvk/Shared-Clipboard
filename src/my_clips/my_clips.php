@@ -40,7 +40,7 @@ if (!isset($_SESSION['logged_in'])) {
                 <th>Описание</th>
                 <th>Тип</th>
                 <th>Съдържание</th>
-                <th>Частни</th>
+                <th>Лични</th>
                 <th>Действия</th>
             </thead>
             <?php
