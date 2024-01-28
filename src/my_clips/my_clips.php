@@ -4,7 +4,7 @@ include dirname(__FILE__) . '/../header.php';
 include dirname(__FILE__) . '/../footer.php';
 
 // session_start();
-require_once dirname(__FILE__) .'/../config/config.php';
+require_once dirname(__FILE__) . '/../config/config.php';
 
 // Check if the user is already logged in
 if (!isset($_SESSION['logged_in'])) {
@@ -26,6 +26,7 @@ if (!isset($_SESSION['logged_in'])) {
 
 <body>
     <main class="section" id="main">
+        <h1>Моите отрезки</h1>
         <p id="user-message">
             <?php
             if (isset($_SESSION['msg'])) {
@@ -34,7 +35,12 @@ if (!isset($_SESSION['logged_in'])) {
             unset($_SESSION['msg']);
             ?>
         </p>
-        <h1>Моите отрезки</h1>
+        <form action="./bulk_clips_action.php" method="post" enctype="multipart/form-data">
+            <button type="submit" name="export">Експорт на всички отрезки</button>
+
+            <input type="file" name="importClipsFile" id="importClipsFile">
+            <button type="submit" name="import">Импорт на отрезки</button>
+        </form>
         <table class="clip-table">
             <thead>
                 <th>Име</th>
