@@ -27,6 +27,7 @@ class Db
     private $clipCntForUserIdStmt;
     private $deleteClipForUserIdByIdStmt;
     private $subscribedToStmt;
+    private $getClipByIdStmt;
 
     public function __construct()
     {
@@ -76,6 +77,8 @@ class Db
         $this->clipCntForUserIdStmt = $this->connection->prepare("SELECT COUNT(1) FROM clip WHERE owner_id=:id");
         $this->deleteClipForUserIdByIdStmt = $this->connection->prepare("DELETE FROM clip WHERE owner_id=:userId AND id=:clipId");
         $this->subscribedToStmt = $this->connection->prepare(("SELECT user.* FROM subscription JOIN user ON subscription.user_id = user.id WHERE subscription.subscriber_id = :subscriberId"));
+        $this->getClipByIdStmt = $this->connection->prepare("SELECT * FROM clip WHERE id = :clipId");
+
     }
 
     public function storeAuthToken($userId, $token, $expirationTime)
@@ -241,12 +244,18 @@ class Db
         return $this->subscribedToStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Inside the Db class
+    // Todo: fix this or change it with the other one
     public function getPublicClipsForUser($userId)
     {
         $stmt = $this->connection->prepare("SELECT * FROM clip WHERE owner_id = :userId AND is_public = 1");
         $stmt->execute(['userId' => $userId]);
         return $stmt->fetchAll();
+    }
+
+    public function getClipById($clipId)
+    {
+        $this->getClipByIdStmt->execute(['clipId' => $clipId]);
+        return $this->getClipByIdStmt->fetch();
     }
 
 }
