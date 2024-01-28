@@ -258,6 +258,13 @@ class Db
         return $this->getClipByIdStmt->fetch();
     }
 
+    public function getAllClipsForUser($userId)
+    {
+        $stmt = $this->connection->prepare("SELECT name, description, resource_type, resource_data, is_public FROM clip WHERE owner_id = :userId");
+        $stmt->execute(['userId' => $userId]);
+        return $stmt->fetchAll();
+    }
+
 }
 
 $db = new Db();
