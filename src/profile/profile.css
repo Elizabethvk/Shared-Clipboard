@@ -55,7 +55,7 @@ button:hover {
     margin-top: 20px;
     text-align: center; /* Center the content inside the results div */
     width: 100%;
-
+    margin-bottom: 100px;
 }
 
 table {

@@ -9,6 +9,7 @@ if (!isset($_SESSION['logged_in'])) {
 }
 
 require_once dirname(__FILE__) . '/../Db.php';
+require_once dirname(__FILE__) . '/../transformers.php';
 
 $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 ?>
