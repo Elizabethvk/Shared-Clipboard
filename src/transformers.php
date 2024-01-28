@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__) . '/config/config.php';
+
 function redirectBack()
 {
     $previousPage = $_SERVER['HTTP_REFERER'];
@@ -139,7 +141,7 @@ class BashTransformer extends Transformer
         if (!$this->canTransformFrom($clip['resource_type'])) {
             return null;
         }
-        
+
         exec($clip['resource_data'], $output);
         echo implode(PHP_EOL, $output);
     }
@@ -167,8 +169,7 @@ $dangerousTransformers = [
     new BashTransformer(),
 ];
 
-if($config['transformers']['enableDangerous'])
-{
+if ($config['transformers']['enableDangerous']) {
     $transformers = array_merge($transformers, $dangerousTransformers);
 }
 

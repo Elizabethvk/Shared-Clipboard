@@ -22,6 +22,7 @@ if (!isset($_SESSION['logged_in'])) {
     <title>Моите отрезки</title>
     <link rel="stylesheet" type="text/css" href="./my_clips.css">
     <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon.png">
+    <script src="./my_clips.js" defer></script>
 </head>
 
 <body>
@@ -105,6 +106,9 @@ if (!isset($_SESSION['logged_in'])) {
                 echo "</td>";
                 echo "<td>";
                 echo "<button type=\"submit\" name=\"delete\" value=\"$clip[id]\">Изтрий</button>";
+                echo "</td>";
+                echo "<td>";
+                echo "<button type=\"button\" name=\"copyLink\" value=\"$clip[id]\" onclick=\"copyShareLink($clip[id])\">Сподели</button>";
                 echo "</td>";
                 echo "</tr>";
                 echo "</form>";
