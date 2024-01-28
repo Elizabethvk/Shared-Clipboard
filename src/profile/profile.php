@@ -1,13 +1,14 @@
 <?php
 $active = "profile";
-include $_SERVER['DOCUMENT_ROOT'] . '/src/header.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/src/footer.php';
+include dirname(__FILE__) . '/../header.php';
+include dirname(__FILE__) . '/../footer.php';
 
 // session_start();
+require_once dirname(__FILE__) . '/../config/config.php';
 
 // Check if the user is already logged in
 if (!isset($_SESSION['logged_in'])) {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/login/login.php');
+    header('Location:' . $config['host']['url'] . '/src/login/login.php');
     exit();
 }
 
@@ -27,9 +28,9 @@ if (!isset($_SESSION['logged_in'])) {
 
 <body>
     <h1>Профил</h1>
-    
+
     <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+    require_once dirname(__FILE__) . '/../Db.php';
 
     $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
     $clipCnt = $db->getClipCntForUserIds(getCurrentUser()['id']);
@@ -41,20 +42,20 @@ if (!isset($_SESSION['logged_in'])) {
             <?php echo getCurrentUser()['username'] ?>!
         </p>
         <p>Имаш
-            <?php 
+            <?php
             echo $subCnt;
             echo " последовател";
             echo $subCnt === 1 ? '.' : 'и.';
             // echo $subCnt; 
-            ?> 
+            ?>
             <!-- последователи. -->
         </p>
         <p>Имаш
-        <?php 
+            <?php
             echo $clipCnt;
             echo $clipCnt === 1 ? ' отрязък.' : ' отрязъци.';
-            ?> 
-             <!-- отрязъци. -->
+            ?>
+            <!-- отрязъци. -->
         </p>
     </div>
 

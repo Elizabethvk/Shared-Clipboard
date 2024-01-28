@@ -1,13 +1,14 @@
 <?php
 $active = "my-clips";
-include $_SERVER['DOCUMENT_ROOT'] . '/src/header.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/src/footer.php';
+include dirname(__FILE__) . '/../header.php';
+include dirname(__FILE__) . '/../footer.php';
 
 // session_start();
+require_once dirname(__FILE__) .'/../config/config.php';
 
 // Check if the user is already logged in
 if (!isset($_SESSION['logged_in'])) {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/login/login.php');
+    header('Location:' . $config['host']['url'] . '/src/login/login.php');
     exit();
 }
 
@@ -47,8 +48,8 @@ if (!isset($_SESSION['logged_in'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return;
             }
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/src/transformers.php';
+            require_once dirname(__FILE__) . '/../Db.php';
+            require_once dirname(__FILE__) . '/../transformers.php';
 
             function printValidActionsForClip($clip)
             {

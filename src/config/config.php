@@ -1,3 +1,3 @@
 <?php
 
-$config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/src/config/config.ini', true);
+$config = parse_ini_file(dirname(__FILE__) . '/config.ini', true);

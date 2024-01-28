@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
+require_once dirname(__FILE__) . '/config/config.php';
 
 class Db
 {
