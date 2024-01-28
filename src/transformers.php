@@ -89,9 +89,17 @@ class FileDownloadOverLinkTransformer extends Transformer
         }
 
         $file_url = "$clip[resource_data]";
-        header('Content-Type: application/octet-stream');
-        header("Content-Transfer-Encoding: Binary");
-        header("Content-disposition: attachment; filename=\"$clip[name]\"");
+
+        $file_extension = pathinfo($file_url, PATHINFO_EXTENSION);
+        
+        $content_type = mime_content_type($file_extension);
+        header("Content-Type: $content_type");
+
+        // Without the extension (old version)
+        // header('Content-Type: application/octet-stream');
+        // header("Content-Transfer-Encoding: Binary");
+
+        header("Content-disposition: attachment; filename=\"$clip[name].$file_extension\"");
         readfile($file_url);
     }
 
