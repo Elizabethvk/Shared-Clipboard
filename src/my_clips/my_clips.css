@@ -56,10 +56,13 @@ button {
     background-color: #e98300;
     color: white;
     padding: 10px;
-    border: none;
+    border: 1px solid #e37100;
     cursor: pointer;
-    /* width: 100%; */
     font-weight: bold;
+}
+
+button.table-button {
+    width: 100%;
 }
 
 button:hover {

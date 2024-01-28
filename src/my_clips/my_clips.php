@@ -102,13 +102,13 @@ if (!isset($_SESSION['logged_in'])) {
                 printValidActionsForClip($clip);
                 echo "</td>";
                 echo "<td>";
-                echo "<button type=\"submit\" name=\"act\" value=\"$idx\">Изпълни</button>";
+                echo "<button class=\"table-button\" type=\"submit\" name=\"act\" value=\"$idx\">Изпълни</button>";
                 echo "</td>";
                 echo "<td>";
-                echo "<button type=\"submit\" name=\"delete\" value=\"$clip[id]\">Изтрий</button>";
+                echo "<button class=\"table-button\" type=\"submit\" name=\"delete\" value=\"$clip[id]\">Изтрий</button>";
                 echo "</td>";
                 echo "<td>";
-                echo "<button type=\"button\" name=\"copyLink\" value=\"$clip[id]\" onclick=\"copyShareLink($clip[id])\">Сподели</button>";
+                echo "<button class=\"table-button\" type=\"button\" name=\"copyLink\" value=\"$clip[id]\" onclick=\"copyShareLink($clip[id])\">Сподели</button>";
                 echo "</td>";
                 echo "</tr>";
                 echo "</form>";

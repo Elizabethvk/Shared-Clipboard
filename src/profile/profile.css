@@ -77,6 +77,10 @@ th {
     color: white;
 }
 
+button {
+    border: 1px solid #e37100;
+}
+
 #action {
     width: 25%;
 }

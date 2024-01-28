@@ -1,0 +1,33 @@
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
+}
+
+.info {
+    margin-left: 25%;
+}
+
+button {
+    padding: 10px;
+    margin-left: 25%;
+    background-color: #e98300;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: medium;
+}
+
+
+button:hover {
+    background-color: #bf6c00;
+}
