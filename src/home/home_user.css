@@ -70,6 +70,7 @@ button {
     border: none;
     cursor: pointer;
     font-weight: bold;
+    width: 100%;
 }
 
 button:hover {
