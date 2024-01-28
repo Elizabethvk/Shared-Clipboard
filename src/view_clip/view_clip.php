@@ -54,7 +54,7 @@ if (!isset($_GET['clipId'])) {
         </p>
         <p>
             Съдържание:
-            <?php echo $clip['resource_data']; ?>
+            <?php echo htmlspecialchars($clip['resource_data']); ?>
         </p>
         <form action="../../src/home/copy_clip.php" method="post">
             <input type="hidden" name="clip_id" value="<?= $clip['id'] ?>">
