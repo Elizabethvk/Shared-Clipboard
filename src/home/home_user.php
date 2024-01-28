@@ -10,6 +10,7 @@ if (!isset($_SESSION['logged_in'])) {
 
 require_once dirname(__FILE__) . '/../Db.php';
 require_once dirname(__FILE__) . '/../transformers.php';
+require_once dirname(__FILE__) . '/../home/run_clip.php';
 
 $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 ?>
@@ -77,20 +78,6 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 
                     // $user = getCurrentUser();
                     // $username = $user['username'];
-            
-                    function printValidActionsForClip($clip, $dropdownName)
-                    {
-                        $transformableTo = array_map(function ($transformer) {
-                            return $transformer->canTransformTo();
-                        }, availableTransformersFor($clip['resource_type']));
-
-                        echo "<select id=\"$dropdownName\" name=\"$dropdownName\">";
-                        foreach ($transformableTo as $idx => $transformableToStr) {
-                            echo "<option value=\"$idx\">$transformableToStr</option>";
-                        }
-                        echo '</select>';
-                    }
-
 
                     ?>
                     <?php foreach ($publicClips as $clip): ?>
