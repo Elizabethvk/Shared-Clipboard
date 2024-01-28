@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/transformers.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+require_once dirname(__FILE__) . '/../transformers.php';
+require_once dirname(__FILE__) . '/../Db.php';
 
 session_start();
 

@@ -1,9 +1,11 @@
 <?php
+require_once dirname(__FILE__) . "/../config/config.php";
+
 session_start();
 
 // Check if the user is already logged in
 if (isset($_SESSION['logged_in'])) {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/home/home_user.php');
+    header('Location:' . $config['host']['url'] . '/src/home/home_user.php');
     exit();
 }
 
@@ -62,7 +64,8 @@ if (isset($_SESSION['logged_in'])) {
             </div>
 
             <div class="form-group">
-                <input type="password" class="input-group" placeholder="Потвърди парола" name="repeat_password" id="repeat_password" required />
+                <input type="password" class="input-group" placeholder="Потвърди парола" name="repeat_password"
+                    id="repeat_password" required />
                 <p class="error" id="errorrepeat_password"></p>
             </div>
 

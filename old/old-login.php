@@ -8,8 +8,8 @@ else {
     if (isset($_POST['email']) && isset($_POST['password'])) {
         extract($_POST);
 
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
+        require_once dirname(__FILE__) . '/src/Db.php';
+        require_once dirname(__FILE__) . '/src/config/config.php';
 
         $email = $_POST['email'];
         $password = sha1($_POST['password']);
@@ -29,8 +29,8 @@ else {
 // if (!isset($_POST['user'])) {
 //     extract($_POST);
 
-//     require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-//     require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
+//     require_once dirname(__FILE__) . '/src/Db.php';
+//     require_once dirname(__FILE__) . '/src/config/config.php';
 
 //     $email = $_POST['email'];
 //     $password = sha1($_POST['password']);

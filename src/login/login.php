@@ -1,9 +1,11 @@
 <?php
 session_start();
 
+require_once dirname(__FILE__) ."/../config/config.php";
+
 // Check if the user is already logged in
 if (isset($_SESSION['logged_in'])) {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/home/home_user.php');
+    header('Location:' . $config['host']['url'] . '/src/home/home_user.php');
     exit();
 }
 

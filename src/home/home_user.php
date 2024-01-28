@@ -1,17 +1,14 @@
 <?php
 $active = "home";
-include $_SERVER['DOCUMENT_ROOT'] . '/src/header.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/src/footer.php';
+require_once dirname(__FILE__) . '/../header.php';
+require_once dirname(__FILE__) . '/../footer.php';
 
 if (!isset($_SESSION['logged_in'])) {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/src/login/login.php');
+    // header('Location:' . $config['host']['url'] . '/src/login/login.php');
     exit();
 }
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-// require_once $_SERVER['DOCUMENT_ROOT'] . '/src/transformers.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/home/run_clip.php';
-
+require_once dirname(__FILE__) . '/../Db.php';
 
 $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 ?>
@@ -33,7 +30,7 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
     <h1>Начало</h1>
 
     <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+    require_once dirname(__FILE__) . '/../Db.php';
 
     $subCnt = $db->getSubscriberCountForUserId(getCurrentUser()['id']);
     $clipCnt = $db->getClipCntForUserIds(getCurrentUser()['id']);

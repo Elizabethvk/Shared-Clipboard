@@ -1,17 +1,20 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/auth_token.php';
+require_once dirname(__FILE__) . '/../Db.php';
+require_once dirname(__FILE__) . '/../config/config.php.php';
+require_once dirname(__FILE__) . '/../auth_token.php';
 
 function redirectToUserHome()
 {
-    $url = 'http://' . $_SERVER['HTTP_HOST'] . '/src/home/home_user.php';
+    global $config;
+    $url = $config['host']['url'] . '/src/home/home_user.php';
     header('Location:' . $url);
     exit();
 }
 
 function redirectToErrorPage($message)
 {
-    $url = 'http://' . $_SERVER['HTTP_HOST'] . '/src/error/error_page.php?message=$message';
+    global $config;
+    $url = $config['host']['url'] . '/src/error/error_page.php?message=$message';
     header('Location:' . $url);
 }
 

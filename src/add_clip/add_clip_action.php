@@ -1,26 +1,30 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+require_once dirname(__FILE__) . '/../Db.php';
 
 function redirectToAddClip()
 {
-    $url = 'http://' . $_SERVER['HTTP_HOST'] . '/src/add_clip/add_clip.php';
+    global $config;
+    $url = $config['host']['url'] . '/src/add_clip/add_clip.php';
     header("Location:$url");
 }
 function redirectBack()
 {
+    global $config;
     $previousPage = $_SERVER['HTTP_REFERER'];
     header("Location: $previousPage");
 }
 
 function redirectToIndex()
 {
-    $url = 'http://' . $_SERVER['HTTP_HOST'] . '/src/index.php';
+    global $config;
+    $url = $config['host']['url'] . '/src/index.php';
     header("Location:$url");
 }
 
 function redirectToErrorPage($message)
 {
-    $url = 'http://' . $_SERVER['HTTP_HOST'] . "/src/error/error_page.php?message=$message";
+    global $config;
+    $url = $config['host']['url'] . "/src/error/error_page.php?message=$message";
     header("Location:$url");
 }
 
@@ -49,18 +53,14 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
 
         $desc = $_POST['description'];
 
-        if($resourceType === 'auto')
-        {
-            if(preg_match('/^https?:\/\//', $clipContent))
-            {
+        if ($resourceType === 'auto') {
+            if (preg_match('/^https?:\/\//', $clipContent)) {
                 $resourceType = 'link';
-            }else if(preg_match('/^\<\?php/', $clipContent))
-            {
+            } else if (preg_match('/^\<\?php/', $clipContent)) {
                 $resourceType = 'php';
-            }else if(preg_match('/^\#\!/', $clipContent))
-            {
+            } else if (preg_match('/^\#\!/', $clipContent)) {
                 $resourceType = 'bash';
-            }else{
+            } else {
                 $resourceType = 'other';
             }
         }

@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/config/config.php';
+require_once dirname(__FILE__) . '/src/config/config.php';
 
 session_start();
 if ($config['auth']['disable_auth']) {
@@ -10,9 +10,9 @@ if ($config['auth']['disable_auth']) {
 
 if ($_SESSION['logged_in']) {
 	// user is authenticated
-	header('Location: src/home/home_user.php');
+	header('Location:' . $config['host']['url'] . '/src/home/home_user.php');
 } else {
 	// user is not authenticated
-	header('Location: src/login/login.html');
+	header('Location:' . $config['host']['url'] . '/src/login/login.html');
 }
 ?>
