@@ -149,12 +149,20 @@ class BashTransformer extends Transformer
 
 $transformers = [
     new LinkTransformer(),
-    new PhpTransformer(),
     new FileDownloadOverLinkTransformer(),
-    new BashTransformer(),
 
     new CopyTransformer(),
 ];
+
+$dangerousTransformers = [
+    new PhpTransformer(),
+    new BashTransformer(),
+];
+
+if($config['transformers']['enableDangerous'])
+{
+    $transformers = array_merge($transformers, $dangerousTransformers);
+}
 
 function availableTransformersFor($clipType)
 {
