@@ -9,6 +9,9 @@ if (!isset($_SESSION['logged_in'])) {
 }
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Db.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/src/transformers.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/home/run_clip.php';
+
 
 $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 ?>
@@ -43,6 +46,15 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
         </h3>
     </div>
 
+    <p id="user-message">
+        <?php
+        if (isset($_SESSION['msg'])) {
+            echo $_SESSION['msg'];
+        }
+        unset($_SESSION['msg']);
+        ?>
+    </p>
+
     <h2>Публични отрезки на вашите абонаменти:</h2>
 
     <?php if (isset($subscribedUsers) && !empty($subscribedUsers)): ?>
@@ -55,6 +67,9 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
                     <th>Съдържание</th>
                     <th>Собственик</th>
                     <th>Качено на</th>
+                    <th>Добави клип</th>
+                    <th>Действия</th>
+                    <th>Изпълни</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,11 +79,27 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
 
                     // $user = getCurrentUser();
                     // $username = $user['username'];
+            
+                    function printValidActionsForClip($clip, $dropdownName)
+                    {
+                        $transformableTo = array_map(function ($transformer) {
+                            return $transformer->canTransformTo();
+                        }, availableTransformersFor($clip['resource_type']));
+
+                        echo "<select id=\"$dropdownName\" name=\"$dropdownName\">";
+                        foreach ($transformableTo as $idx => $transformableToStr) {
+                            echo "<option value=\"$idx\">$transformableToStr</option>";
+                        }
+                        echo '</select>';
+                    }
+
+
                     ?>
                     <?php foreach ($publicClips as $clip): ?>
                         <?php
                         $owner = $db->getUserById($clip['owner_id']);
                         $username = $owner['username'];
+                        $dropdownName = "transformer_select_$clip[id]";
                         ?>
                         <tr>
                             <td>
@@ -89,6 +120,22 @@ $subscribedUsers = $db->getSubscribedToUsers($_SESSION['user_id']);
                             <td>
                                 <?= htmlspecialchars($clip['uploaded_at']) ?>
                             </td>
+                            <td>
+                                <form action="/src/home/copy_clip.php" method="post">
+                                    <input type="hidden" name="clip_id" value="<?= $clip['id'] ?>">
+                                    <button type="submit">Копирай</button>
+                                </form>
+                            </td>
+                            <form action="/src/home/run_clip.php" method="post">
+                                <td>
+                                    <?php printValidActionsForClip($clip, $dropdownName); ?>
+                                </td>
+                                <td>
+                                    <!-- <form method="post"> -->
+                                    <input type="hidden" name="act" value="<?= $clip['id'] ?>">
+                                    <button type="submit">Изпълни</button>
+                                </td>
+                            </form>
                         </tr>
                     <?php endforeach; ?>
                 <?php endforeach; ?>
