@@ -36,27 +36,29 @@ if (!isset($_GET['clipId'])) {
     ?>
 
     <h1>Отрязък</h1>
-    <p>
-        Име:
-        <?php echo $clip['name'] ?>
-    </p>
-    <p>
-        <?php
-        if ($clip['description'] !== null && $clip['description'] !== '') {
-            echo 'Описание:' . $clip['description'];
-        }
-        ?>
-    </p>
-    <p>
-        Тип:
-        <?php echo $clip['resource_type']; ?>
-    </p>
-    <p>
-        Съдържание:
-        <?php echo $clip['resource_data']; ?>
-    </p>
-    <form action="../../src/home/copy_clip.php" method="post">
-        <input type="hidden" name="clip_id" value="<?= $clip['id'] ?>">
-        <button type="submit">Копирай</button>
-    </form>
+    <section class="info">
+        <p>
+            Име:
+            <?php echo $clip['name'] ?>
+        </p>
+        <p>
+            <?php
+            if ($clip['description'] !== null && $clip['description'] !== '') {
+                echo 'Описание:' . $clip['description'];
+            }
+            ?>
+        </p>
+        <p>
+            Тип:
+            <?php echo $clip['resource_type']; ?>
+        </p>
+        <p>
+            Съдържание:
+            <?php echo $clip['resource_data']; ?>
+        </p>
+        <form action="../../src/home/copy_clip.php" method="post">
+            <input type="hidden" name="clip_id" value="<?= $clip['id'] ?>">
+            <button type="submit">Копирай</button>
+        </form>
+    </section>
 </body>

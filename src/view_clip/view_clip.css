@@ -12,13 +12,13 @@ h1 {
     text-shadow: 0 0 5px #693b00, 0 0 10px #693b00;
 }
 
-p,
-button {
+.info {
     margin-left: 25%;
 }
 
 button {
     padding: 10px;
+    margin-left: 25%;
     background-color: #e98300;
     color: white;
     border: none;
