@@ -20,6 +20,13 @@ function getCurrentUser()
     }
 }
 
+function redirectToErrorPage($message)
+{
+    global $config;
+    $url = $config['host']['url'] . "/src/error/error_page.php?message=$message";
+    header("Location:$url");
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $clips = $db->getAllClipsForUser(getCurrentUser()['id']);
